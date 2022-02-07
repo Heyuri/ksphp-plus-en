@@ -4,7 +4,7 @@ To my knowledge, it works with PHP version 4.1.0 and above.
 
 [https://hiru.coresv.com/ksphp-plus/](https://hiru.coresv.com/ksphp-plus/)
 
-[This program has been translated by Anonymous-san at Strange World@Heyuri.net](https://ayashii.net/bbs.php?m=f&s=1239&c=08&ff=202108.dat)
+This program has been translated by [Anonymous-san at Strange World@Heyuri.net](https://ayashii.net/bbs.php?m=f&s=1239&c=08&ff=202108.dat)
 
 This program is based on the 2005/04/01 modified version of KuzuhaScriptPHP (くずはすくりぷとPHP) by cion (しおん).
 
