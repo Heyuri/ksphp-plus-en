@@ -8,6 +8,9 @@ Please note that PHP version 7 and 8 are not supported.
 
 This program is based on the 2005/04/01 modified version of KuzuhaScriptPHP (くずはすくりぷとPHP) by cion (しおん).
 
+This program has been translated to English by [Anonymous-san at Strange World@Heyuri.net](https://ayashii.net/bbs.php?c=08&m=tree&ff=202205.dat&s=3555)
+
+
 * [KuzuhaScriptPHP (mirror)](http://qptn.x.fc2.com/up/dauso0059.zip)  
 * [2005/04/01 modified version](http://qptn.x.fc2.com/up/dauso0073.zip)
 
