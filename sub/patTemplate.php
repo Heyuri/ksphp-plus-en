@@ -466,13 +466,13 @@ function	setType( $type = "" )
 				$tagname	=	strtolower( $regs[1] );
 				$attributes	=	$this->parseAttributes( $regs[2] );
 
-				if( $attributes[keep] > 0 )
+				if( $attributes['keep'] > 0 )
 				{
 					//	create new attribute
-					$newkeep	=	$attributes[keep] > 1 ? " keep=\"".($attributes[keep]-1)."\"" : "";
+					$newkeep	=	$attributes['keep'] > 1 ? " keep=\"".($attributes['keep']-1)."\"" : "";
 
 					//	replace old attribute with new attribute
-					$newline	=	str_replace( " keep=\"".$attributes[keep]."\"", $newkeep, $line );
+					$newline	=	str_replace( " keep=\"".$attributes['keep']."\"", $newkeep, $line );
 
 					//	use this line as data
 					$this->dataHandler( $fname, $newline, $lineno );
@@ -547,8 +547,8 @@ function	setType( $type = "" )
 	function	startElementHandler( $fname, $tagname, $attributes, $line, $lineno )
 	{
 		//	check for whitespace attribute
-		if( $attributes[whitespace] )
-			array_push( $this->whitespace, strtolower( $attributes[whitespace] ) );
+		if( $attributes['whitespace'] )
+			array_push( $this->whitespace, strtolower( $attributes['whitespace'] ) );
 		//	use whitepspace mode from last opened template
 		else				
 			array_push( $this->whitespace, $this->whitespace[( count( $this->whitespace )-1 )] );
@@ -560,10 +560,10 @@ function	setType( $type = "" )
 				//	parse all attributes from a string into an associative array
 				
 				//	Check for name of template, which is a necessary attribute
-				if( !$tmpl_name	=	strtoupper( $attributes[name] ) )
+				if( !$tmpl_name	=	strtoupper( $attributes['name'] ) )
 					die	( "Error in template '".$fname."': missing name for template in line ".$lineno );
 
-				unset( $attributes[name] );
+				unset( $attributes['name'] );
 
 				//	Increment Tag Depth
 				$this->depth++;
@@ -575,26 +575,26 @@ function	setType( $type = "" )
 				$this->template_names[$this->depth]			=	$tmpl_name;
 				
 				//	Check, if attribute "type" was found
-				if( $tmpl_type	=	strtoupper( $attributes[type] ) )
+				if( $tmpl_type	=	strtoupper( $attributes['type'] ) )
 				{
 					$this->template_types[$this->depth]		=	$tmpl_type;
-					$attributes[type]						=	$tmpl_type;
+					$attributes['type']						=	$tmpl_type;
 				}
 				//	No type found => this is a boring standard template
 				else
 				{
-					$attributes[type]						=	"STANDARD";
+					$attributes['type']						=	"STANDARD";
 					$this->template_types[$this->depth]		=	"STANDARD";
 				}
 
 				//	Check for src attribute => external file
-				if( $attributes[src] )
+				if( $attributes['src'] )
 				{
 					//	Store the filename of the external file
-					$filename						=	$attributes[src];
+					$filename						=	$attributes['src'];
 
 					//	Has the external file to be parsed
-					if( $attributes[parse] == "on" )
+					if( $attributes['parse'] == "on" )
 						$this->createParser( $filename );
 
 					//	No parsing, just take the whole content of the file
@@ -611,7 +611,7 @@ function	setType( $type = "" )
 					}
 
 					//	Delete the src attribute, it hasn't to be stored
-					unset( $attributes[src] );
+					unset( $attributes['src'] );
 				}
 				//	No external file => the template is part of teh current file
 				else
@@ -633,7 +633,7 @@ function	setType( $type = "" )
 					//	Template is a condition Tenplate => it needs a condition var	
 					case "CONDITION":
 						//	none found => there is an error
-						if( !$conditionvar	=	$attributes[conditionvar] )
+						if( !$conditionvar	=	$attributes['conditionvar'] )
 							die	( "Error in template '".$fname."': missing conditionvar for template in line ".$lineno );
 							
 						//	conditionvar was found => store it
@@ -643,7 +643,7 @@ function	setType( $type = "" )
 					//	Template is a simple condition Tenplate => it needs required vars
 					case "SIMPLECONDITION":
 						//	none found => there is an error
-						if( $requiredvars = $attributes[requiredvars] )
+						if( $requiredvars = $attributes['requiredvars'] )
 							$this->setAttribute( $this->template_names[$this->depth], "requiredvars", explode( ",", $requiredvars ) );
 						else
 							die	( "Error in template '".$fname."': missing requiredvars attribute for simple condition template in line ".$lineno );
@@ -657,7 +657,7 @@ function	setType( $type = "" )
 				if	( $this->depth > 0 )
 				{
 					//	Is there a placeholder attribute?
-					if( $placeholder = strtoupper( $attributes[placeholder] ) )
+					if( $placeholder = strtoupper( $attributes['placeholder'] ) )
 					{
 						//	placeholder="none" found => DO NOT PUT A PLACEHOLDER IN THE PARENT TEMPLATE!
 						if( $placeholder != "NONE" )
@@ -677,7 +677,7 @@ function	setType( $type = "" )
 			//	Found the beginning of a subtemplate
 			case "sub":
 				//	A subtemplate needs to have a "condition" attribute
-				$condition	=	$attributes[condition];
+				$condition	=	$attributes['condition'];
 
 				//	None found => error
 				if( isset( $condition ) == 0 )
@@ -692,7 +692,7 @@ function	setType( $type = "" )
 			
 			//	Found a link template
 			case "link":
-				$src		=	strtoupper( $attributes[src] );
+				$src		=	strtoupper( $attributes['src'] );
 				
 				if( !$src )
 					die	( "Error in template '".$fname."': missing src attribute for link in line ".$lineno );
@@ -940,7 +940,7 @@ function	setType( $type = "" )
 		$name	=	strtoupper( $name );
 
 		//	prepend basedirname, if it exists
-		$fname	=	$this->basedir!="" ? $this->basedir."/".$this->source[$name][filename] : $this->source[$name][filename];
+		$fname	=	$this->basedir!="" ? $this->basedir."/".$this->source[$name]['filename'] : $this->source[$name]['filename'];
 
 		if( stristr( $fname, "[part" ) )
 			return	true;
