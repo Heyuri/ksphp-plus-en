@@ -202,7 +202,7 @@ function	setType( $type = "" )
 */
 	function	addTemplates( $templates )
 	{
-		while	( list( $name, $file ) = each( $templates ) )
+		foreach ($templates as $name => $file)
 			$this->addTemplate( $name, $file );
 	}
 
@@ -316,7 +316,7 @@ function	setType( $type = "" )
 
 		$template								=	strtoupper( $template );
 
-		while( list( $attribute, $value ) = each( $attributes ) )
+		foreach ($attributes as $attribute => $value)
 		{
 			$attribute								=	strtolower( $attribute );
 			$this->attributes[$template][$attribute]=	$value;
@@ -824,7 +824,7 @@ function	setType( $type = "" )
 			return	false;
 			
 		//	Add all vars
-		while	( list( $name, $value ) = each( $variables ) )
+		foreach ($variables as $name => $value)
 		{
 			if( !is_int( $name ) )
 				$this->addVar( $template, $prefix.$name, $value );
@@ -860,7 +860,7 @@ function	setType( $type = "" )
 				if( is_array( $rows[$i] ) )
 				{
 					//	Get key and value
-					while( list( $key,$value ) = each( $rows[$i] ) )
+					foreach ($rows[$i] as $key => $value)
 					{
 						//	check if the array key is an int value => skip it
 						if ( !is_int( $key ) )
@@ -903,7 +903,7 @@ function	setType( $type = "" )
 */
 	function	addGlobalVars( $variables, $prefix = "" )
 	{
-		while	( list( $variable, $value ) = each( $variables ) )
+		foreach ($variables as $variable => $value)
 		{
 			$this->globals[strtoupper( $prefix.$variable )]		=	(string)$value;
 		}
@@ -1025,7 +1025,7 @@ function	setType( $type = "" )
 
 		$vars					=	$this->getVars( $name );
 		$vars[$this->tag_start."PAT_ROW_VAR".$this->tag_end]	=	1;
-		while( list( $tag, $value ) = each( $vars ) )
+		foreach ($vars as $tag => $value)
 		{
 			if( is_array( $value ) )
 			{
@@ -1079,7 +1079,7 @@ function	setType( $type = "" )
 			$current		=	$this->getTemplateContent( $name );
 			
 			$vars			=	$this->getVars( $name );
-			while( list( $tag, $value ) = each( $vars ) )
+			foreach ($vars as $tag => $value)
 				$current		=	str_replace( $tag, $value, $current );
 
 			//	and the dependent Templates
@@ -1119,7 +1119,7 @@ function	setType( $type = "" )
 			//	Pointer im Array auf 0 setzen
 			reset( $this->variables[$template] );
 	
-			while	( list( $variable, $value ) = each( $this->variables[$template] ) )
+			foreach ($this->variables[$template] as $variable => $value)
 			{
 				$tag	=	$this->tag_start.$variable.$this->tag_end;
 
@@ -1135,7 +1135,7 @@ function	setType( $type = "" )
 		{
 			$parentVars		=	$this->getVars( $scope );
 			reset( $parentVars );
-			while( list( $var, $value ) = each( $parentVars ) )
+			foreach ($parentVars as $var => $value)
 			{
 				if( !$vars[$var] )
 					$vars[$var]		=	$value;
@@ -1164,7 +1164,7 @@ function	setType( $type = "" )
 		{
 			reset( $this->globals );
 			
-			while	( list( $variable, $value ) = each( $this->globals ) )
+			foreach ($this->globals as $variable => $value)
 			{
 				$tag	=	$this->tag_start.$variable.$this->tag_end;
 				$temp	=	str_replace( $tag, $value, $temp );
@@ -1581,7 +1581,7 @@ function	setType( $type = "" )
 			echo	"			<table border=\"0\" cellpadding=\"0\" cellspacing=\"1\">\n";
 
 			//	Display all Attributes in table
-			while( list( $key, $value ) = each( $this->attributes[$name] ) )
+			foreach ($this->attributes[$name] as $key => $value)
 			{
 				echo	"				<tr>\n";
 				echo	"					<td class=\"text\"><b>".$key."</b></td>\n";
@@ -1730,7 +1730,7 @@ function	setType( $type = "" )
 				echo	"			<table border=\"0\" cellpadding=\"0\" cellspacing=\"1\">\n";
 	
 				//	Display all Variables in table
-				while( list( $key, $value ) = each( $this->variables[$name] ) )
+				foreach ($this->variables[$name] as $key => $value)
 				{
 					if( is_array( $value ) )
 						$value	=	implode( ", ", $value );
