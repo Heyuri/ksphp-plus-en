@@ -60,7 +60,7 @@ class	patTemplate
 * @access	public
 * @param	string	$type		type of output you want to generate.
 */
-	function	patTemplate( $type = "html" )
+	function	__construct( $type = "html" )
 	{
 		//	Directory, where Templates are stored
 		$this->basedir			=	"";
