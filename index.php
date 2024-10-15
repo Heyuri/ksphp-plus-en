@@ -300,8 +300,11 @@ function tripuse($key) {
         # Default URL
         $this->s['DEFURL'] = $this->c['CGIURL'] . '?' . $this->s['QUERY'];
         # Initialize template variables
-        $this->t->addGlobalVars($this->c);
-        $this->t->addGlobalVars($this->s);
+        $tmp = array_merge($this->c, $this->s);
+        foreach ($tmp as $key => $val) {
+            if (is_array($val)) unset($tmp[$key]);
+        }
+        $this->t->addGlobalVars($tmp);
     }
 
     /**
