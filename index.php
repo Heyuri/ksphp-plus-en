@@ -1,6 +1,6 @@
 <?php
-if (intval(str_replace(".", "", phpversion())) < 410) {
-    print 'Error: PHP version is '.phpversion().'. This script is compatible with PHP 4.1.0 and above.';
+if (strpos(phpversion(), '8') !== 0) {
+    echo 'Error: PHP version is '.phpversion().'. This script is compatible with PHP 8.0 and above.';
     exit();
 }
 if (ini_get('register_globals') == 1) {
