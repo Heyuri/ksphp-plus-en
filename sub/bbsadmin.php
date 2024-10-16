@@ -140,8 +140,8 @@ class Bbsadmin extends Webapp {
         $this->t->addVar('killlist', 'V', trim($this->f['v']));
 
         $messages = array();
-        while ($logline = each($logdata)) {
-            $message = $this->getmessage($logline[1]);
+        foreach ($logdata as $logline) {
+            $message = $this->getmessage($logline);
             $message['MSG'] = preg_replace("/<a href=[^>]+>Reference: [^<]+<\/a>/i", "", $message['MSG'], 1);
             $message['MSG'] = preg_replace("/<[^>]+>/", "", ltrim($message['MSG']));
             $msgsplit = explode("\r", $message['MSG']);

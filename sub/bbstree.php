@@ -366,7 +366,7 @@ class Treeview extends Bbs {
 
         # Outputting parent message
         reset($treemsgs);
-        while (list($pos, $treemsg) = each($treemsgs)) {
+        foreach ($treemsgs as $pos => $treemsg) {
             if ($treemsg['POSTID'] == $parentid) {
 
                 # Delete reference
@@ -407,9 +407,9 @@ class Treeview extends Bbs {
         # Enumerate child IDs
         $childids = array();
         reset($treemsgs);
-        while ($treemsg = each($treemsgs)) {
-            if ($treemsg[1]['REFID'] == $parentid) {
-                $childids[] = $treemsg[1]['POSTID'];
+        foreach ($treemsgs as $treemsg) {
+            if ($treemsg['REFID'] == $parentid) {
+                $childids[] = $treemsg['POSTID'];
             }
         }
 
@@ -424,11 +424,11 @@ class Treeview extends Bbs {
 
         # Get the tree strings of children and join them together
         $childidcount = count($childids) - 1;
-        while ($childid = each($childids)) {
-            $childtree =& $this->gentree($treemsgs, $childid[1]);
+        foreach ($childids as $idx => $childid) {
+            $childtree =& $this->gentree($treemsgs, $childid);
 
             # If there's another child, extend from "├" branch with a "│"
-            if ($childid[0] < $childidcount) {
+            if ($idx < $childidcount) {
                 $childtree = '<span class="bc">├</span>' . str_replace("\r", "\r".'<span class="bc">│</span>', $childtree);
             }
             # If it's the last child, make the start of the line blank and use "└" branch

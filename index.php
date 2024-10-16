@@ -852,8 +852,8 @@ class Bbs extends Webapp {
         # Upper main section
         $this->t->displayParsedTemplate('main_upper');
         # Display message
-        while ($msgdata = each($logdatadisp)) {
-            print $this->prtmessage($this->getmessage($msgdata[1]), 0, 0);
+        foreach ( $logdatadisp as $msgdata) {
+            print $this->prtmessage($this->getmessage($msgdata), 0, 0);
         }
         # Message information
         if ($this->s['MSGDISP'] < 0) {
@@ -1164,8 +1164,8 @@ class Bbs extends Webapp {
         $this->t->displayParsedTemplate('searchlist_upper');
 
         $result = $this->msgsearchlist($mode);
-        while ($message = each($result)) {
-            print $this->prtmessage ($message[1], $mode, $this->f['ff']);
+        foreach ($result as $message) {
+            print $this->prtmessage ($message, $mode, $this->f['ff']);
         }
         $success = count($result);
 
@@ -1395,10 +1395,10 @@ class Bbs extends Webapp {
     function searchmessage($varname, $searchvalue, $ismultiple = FALSE, $filename = "") {
         $result = array();
         $logdata = $this->loadmessage($filename);
-        while ($logline = each($logdata)) {
-            $message = $this->getmessage($logline[1]);
+        foreach ($logdata as $logline) {
+            $message = $this->getmessage($logline);
             if (isset($message[$varname]) and $message[$varname] == $searchvalue) {
-                $result[] = $logline[1];
+                $result[] = $logline;
                 if (!$ismultiple) {
                     break;
                 }
@@ -2167,9 +2167,6 @@ class Func {
     public static function html_escape($value) {
         if ($value == '') {
             return $value;
-        }
-        if (get_magic_quotes_gpc()) {
-            $value = stripslashes($value);
         }
         if (!preg_match("/^\w+$/", $value)) {
             $value = htmlspecialchars($value, ENT_QUOTES);
