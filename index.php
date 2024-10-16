@@ -23,6 +23,17 @@ $CONF['VERSION'] = '[20220506] (ヶ, ＠Links, 擬古猫)';
 // Set error output level
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
+// Demote "Undefined array key" warnings to notice
+// https://github.com/php/php-src/issues/8906#issuecomment-1172810362
+set_error_handler(function($errno, $error){
+    if (!str_starts_with($error, 'Undefined array key')){
+        return false;  //default error handler.
+    }else{
+        trigger_error($error, E_USER_NOTICE);
+        return true;
+    }
+}, E_WARNING);
+
 if ($CONF['RUNMODE'] == 2) {
     print 'This bulletin board is currently out of service.';
     exit();
