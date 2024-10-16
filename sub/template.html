@@ -9,7 +9,7 @@
     <meta name="keywords" content="{META_KEYWORDS}">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="format-detection" content="telephone=no, address=no">
-    <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
     <link rel="canonical" href="https://hiru.coresv.com/bbs.php">
     <meta name="theme-color" content="#{C_BACKGROUND}">
     <meta name="msapplication-TileColor" content="#{C_BACKGROUND}">
@@ -19,8 +19,10 @@
     <meta property="og:description" content="{META_DESCRIPTION}">
     <!-- <meta property="og:url" content="URL of the page"> -->
     <meta property="og:site_name" content="{TITLE}">
-    {CUSTOMHEAD}
     <title>{TITLE}</title>
+    <script type="text/javascript" src="js/ayashiibreaker.js" defer></script>
+    <script type="text/javascript" src="js/upthumb.js" defer></script>
+    <script type="text/javascript" src="js/ytthumb.js" defer></script>
     <style>
     html { scroll-behavior: smooth; }
     body { max-height: 100%; -webkit-text-size-adjust: 100%; background: #{C_BACKGROUND}; color: #{C_TEXT};font-family: "BIZ UDゴシック", "Noto Sans Mono CJK JP", "Noto Sans Mono", "IPAゴシック", "HGゴシックM", "ＭＳ ゴシック", "MS Gothic", monospace; font-size: 14px; }
@@ -36,8 +38,8 @@
 	fieldset { border: 2px #c0c0c0 solid; border-radius: 2px;}
     /* Mobile compatibility */
     @media screen and (min-width: 0px){
-        .msgnormal { font-size: 0.9rem; font-size: 14px; line-height:1.3; white-space: pre-wrap; word-wrap: break-word; }
-        .msgtree { font-size: 0.9rem; font-size: 14px; line-height:1.3; white-space: pre; }
+        .msgnormal { font-size: 0.9rem; font-size: 14px; line-height:1; /* white-space: pre-wrap; */ word-wrap: break-word; }
+        .msgtree { font-size: 0.9rem; font-size: 14px; line-height:1; white-space: pre; }
         div.contents { margin-left: 18px; }
     }
     @media screen and (min-width: 640px){
@@ -57,6 +59,8 @@
     .link_row { font-size: 13px; font-size: 0.8rem; }
     /* Message */
     .bbsmsg { font-size: 16px; font-size: 1.0rem; }
+    /* BUTTANS */
+    .kaomoji {font-family: inherit;}
     /* Write/erase completion message */
     .msg-completed { font-size: xx-large; font-weight: bold; }
     /* Small */
@@ -102,6 +106,36 @@
     /* Custom */
     {CUSTOMSTYLE}
 </style>
+{CUSTOMHEAD}
+	<script>
+function insertThisInThere(thisChar, thereId) {
+	function theCursorPosition(ofThisInput) {
+		// set a fallback cursor location
+		var theCursorLocation = 0;
+
+		// find the cursor location via IE method...
+		if (document.selection) {
+			ofThisInput.focus();
+			var theSelectionRange = document.selection.createRange();
+			theSelectionRange.moveStart('character', -ofThisInput.value.length);
+			theCursorLocation = theSelectionRange.text.length;
+		} else if (ofThisInput.selectionStart || ofThisInput.selectionStart == '0') {
+			// or the FF way 
+			theCursorLocation = ofThisInput.selectionStart;
+		}
+		return theCursorLocation;
+	}
+
+	// now get ready to place our new character(s)...
+	var theIdElement = document.getElementById(thereId);
+	var currentPos = theCursorPosition(theIdElement);
+	var origValue = theIdElement.value;
+	var newValue = origValue.substr(0, currentPos) + thisChar + origValue.substr(currentPos);
+
+	theIdElement.value = newValue;
+
+}
+</script>
 </head>
 <body>
 <a id="top"></a>
@@ -254,6 +288,63 @@
             <br>
             <textarea rows="5" cols="70" name="v" accesskey="4" maxlength="10000" placeholder="" title="Alt(+Shift)+4" id="contents1">{DMSG}</textarea>
         </p>
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´ー｀)ノ','contents1')" value="ヽ(´ー｀)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´ー`)','contents1')" value="(´ー`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;´Д`)','contents1')" value="(;´Д`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´∇`)ノ','contents1')" value="ヽ(´∇`)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´∇`)σ','contents1')" value="(´∇`)σ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(＾Д^)','contents1')" value="(＾Д^)" />
+<br />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;^Д^)','contents1')" value="(;^Д^)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾉД^､)σ','contents1')" value="(ﾉД^､)σ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟ∇ﾟ)','contents1')" value="(ﾟ∇ﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;ﾟ∇ﾟ)','contents1')" value="(;ﾟ∇ﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('Σ(;ﾟ∇ﾟ)','contents1')" value="Σ(;ﾟ∇ﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;ﾟДﾟ)','contents1')" value="(;ﾟДﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('Σ(;ﾟДﾟ)','contents1')" value="Σ(;ﾟДﾟ)" />
+<br />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(｀∇´)','contents1')" value="(｀∇´)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(｀ー´)','contents1')" value="(｀ー´)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(｀～´)','contents1')" value="(｀～´)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;`-´)','contents1')" value="(;`-´)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(`Д´)ノ','contents1')" value="ヽ(`Д´)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(`Д´)','contents1')" value="(`Д´)" />
+<br />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;`Д´)','contents1')" value="(;`Д´)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟ血ﾟ#)','contents1')" value="(ﾟ血ﾟ#)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(╬⊙Д⊙)','contents1')" value="(╬⊙Д⊙)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ρ_;)','contents1')" value="(ρ_;)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(TДT)','contents1')" value="(TДT)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾉД`､)','contents1')" value="(ﾉД`､)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´Д`)','contents1')" value="(´Д`)" />
+<br />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´-｀)','contents1')" value="(´-｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´￢`)','contents1')" value="(´￢`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(ﾟρﾟ)ノ','contents1')" value="ヽ(ﾟρﾟ)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟー｀)','contents1')" value="(ﾟー｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´π｀)','contents1')" value="(´π｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟДﾟ)','contents1')" value="(ﾟДﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟへﾟ)','contents1')" value="(ﾟへﾟ)" />
+<br />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟーﾟ)','contents1')" value="(ﾟーﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟｰﾟ)','contents1')" value="(ﾟｰﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(*\'ｰ\')','contents1')" value="(*'ｰ')" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(\'ｰ\')','contents1')" value="('ｰ')" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´人｀)','contents1')" value="(´人｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ъ( ﾟｰ^)','contents1')" value="ъ( ﾟｰ^)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('（⌒∇⌒ゞ）','contents1')" value="（⌒∇⌒ゞ）" />
+<br />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(^^;ﾜﾗ','contents1')" value="(^^;ﾜﾗ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ε≡三ヽ(´ー`)ﾉ','contents1')" value="ε≡三ヽ(´ー`)ﾉ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ε≡Ξヽ( ^Д^)ノ','contents1')" value="ε≡Ξヽ( ^Д^)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´Д`;)ノΞ≡3','contents1')" value="ヽ(´Д`;)ノΞ≡3" />
+<br />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(・∀・)','contents1')" value="(・∀・)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('( ´ω`)','contents1')" value="( ´ω`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('Σ(ﾟдﾟ|||)','contents1')" value="Σ(ﾟдﾟlll)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´～`)','contents1')" value="(´～`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('┐(ﾟ～ﾟ)┌','contents1')" value="┐(ﾟ～ﾟ)┌" />
+
         <p>
             <label for="url1">URL</label>
             <br>
@@ -513,7 +604,7 @@
 <p><span class="msgmore">Page generation time: {DURATION} seconds</span>　<a href="#top" title="Top">▲</a></p>
 </patTemplate:tmpl>
 </footer>
-<script type="text/javascript" src="vanish.js"></script>
+<script type="text/javascript" src="js/vanish.js"></script>
 <script type="text/javascript">(function() 
 {
     $.autopager(
