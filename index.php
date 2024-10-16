@@ -1498,17 +1498,19 @@ class Bbs extends Webapp {
         }
 
         #20240204 猫spam判定 (https://php.o0o0.jp/article/php-spam)
+	#20241016 Warning: Uncommenting this will make it not allow posts with maily half width characters, it's unusable on English BBSes
+	#20241016 注：下記のコメントを外すと、リンクを含め、半角文字の多い投稿ができなくなるので勧めません
         # 文字数char_num = mb_strlen( $this->f['v'], 'UTF8');
         # バイト数byte_num = strlen( $this->f['v']);
 
-        $char_num = mb_strlen( $this->f['v'], 'UTF8');
-        $byte_num = strlen( $this->f['v']);
+        # $char_num = mb_strlen( $this->f['v'], 'UTF8');
+        # $byte_num = strlen( $this->f['v']);
 
         # 1バイト文字が全体の9割を超えている場合
-        if ((($char_num * 3 - $byte_num) / 2 / $char_num * 100) > 90) {
-            # スパム扱い
-            $this->prterror('この掲示板は現在投稿機能停止中です。');
-        }
+        # if ((($char_num * 3 - $byte_num) / 2 / $char_num * 100) > 90) {
+        #     # スパム扱い
+        #     $this->prterror('この掲示板は現在投稿機能停止中です。');
+        # }
 
 
         return $posterr;
