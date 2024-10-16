@@ -1194,8 +1194,8 @@ class Bbs extends Webapp {
      */
     function msgsearchlist($mode) {
 
+        $fh = NULL;
         if ($this->f['ff']) {
-            $fh = NULL;
             if (preg_match("/^[\w.]+$/", $this->f['ff'])) {
                 $fh = @fopen($this->c['OLDLOGFILEDIR'] . $this->f['ff'], "rb");
             }
