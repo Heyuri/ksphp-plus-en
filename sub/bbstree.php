@@ -245,10 +245,10 @@ class Treeview extends Bbs {
             # Extract reference IDs from "reference"
             foreach ($thread as $message) {
                 if (!@$message['REFID']) {
-                    if (preg_match("/<a href=\"m=f&s=(\d+)[^>]+>([^<]+)<\/a>$/i", $tree, $matches)) {
+                    if (preg_match("/<a href=\"m=f&s=(\d+)[^>]+>([^<]+)<\/a>$/i", $message['MSG'], $matches)) {
                         $message['REFID'] = $matches[1];
                     }
-                    else if (preg_match("/<a href=\"mode=follow&search=(\d+)[^>]+>([^<]+)<\/a>$/i", $tree, $matches)) {
+                    else if (preg_match("/<a href=\"mode=follow&search=(\d+)[^>]+>([^<]+)<\/a>$/i", $message['MSG'], $matches)) {
                         $message['REFID'] = $matches[1];
                     }
                 }
