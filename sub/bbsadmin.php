@@ -30,7 +30,7 @@ class Bbsadmin extends Webapp {
      * Constructor
      *
      */
-    function Bbsadmin() {
+    function __construct() {
         parent::__construct();
         if (func_num_args() > 0) {
             $this->bbs = func_get_arg(0);
@@ -140,8 +140,8 @@ class Bbsadmin extends Webapp {
         $this->t->addVar('killlist', 'V', trim($this->f['v']));
 
         $messages = array();
-        while ($logline = each($logdata)) {
-            $message = $this->getmessage($logline[1]);
+        foreach ($logdata as $logline) {
+            $message = $this->getmessage($logline);
             $message['MSG'] = preg_replace("/<a href=[^>]+>Reference: [^<]+<\/a>/i", "", $message['MSG'], 1);
             $message['MSG'] = preg_replace("/<[^>]+>/", "", ltrim($message['MSG']));
             $msgsplit = explode("\r", $message['MSG']);
@@ -331,7 +331,8 @@ class Bbsadmin extends Webapp {
             $this->prterror ('No password has been set.');
         }
 
-        $cryptpass = crypt($inputpass);
+        $salt = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 2);
+        $cryptpass = crypt($inputpass, $salt);
         $inputsize = strlen($cryptpass) + 10;
 
         $this->t->addVars('pass', array(

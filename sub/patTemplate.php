@@ -60,7 +60,7 @@ class	patTemplate
 * @access	public
 * @param	string	$type		type of output you want to generate.
 */
-	function	patTemplate( $type = "html" )
+	function	__construct( $type = "html" )
 	{
 		//	Directory, where Templates are stored
 		$this->basedir			=	"";
@@ -202,7 +202,7 @@ function	setType( $type = "" )
 */
 	function	addTemplates( $templates )
 	{
-		while	( list( $name, $file ) = each( $templates ) )
+		foreach ($templates as $name => $file)
 			$this->addTemplate( $name, $file );
 	}
 
@@ -316,7 +316,7 @@ function	setType( $type = "" )
 
 		$template								=	strtoupper( $template );
 
-		while( list( $attribute, $value ) = each( $attributes ) )
+		foreach ($attributes as $attribute => $value)
 		{
 			$attribute								=	strtolower( $attribute );
 			$this->attributes[$template][$attribute]=	$value;
@@ -466,13 +466,13 @@ function	setType( $type = "" )
 				$tagname	=	strtolower( $regs[1] );
 				$attributes	=	$this->parseAttributes( $regs[2] );
 
-				if( $attributes[keep] > 0 )
+				if( $attributes['keep'] > 0 )
 				{
 					//	create new attribute
-					$newkeep	=	$attributes[keep] > 1 ? " keep=\"".($attributes[keep]-1)."\"" : "";
+					$newkeep	=	$attributes['keep'] > 1 ? " keep=\"".($attributes['keep']-1)."\"" : "";
 
 					//	replace old attribute with new attribute
-					$newline	=	str_replace( " keep=\"".$attributes[keep]."\"", $newkeep, $line );
+					$newline	=	str_replace( " keep=\"".$attributes['keep']."\"", $newkeep, $line );
 
 					//	use this line as data
 					$this->dataHandler( $fname, $newline, $lineno );
@@ -547,8 +547,8 @@ function	setType( $type = "" )
 	function	startElementHandler( $fname, $tagname, $attributes, $line, $lineno )
 	{
 		//	check for whitespace attribute
-		if( $attributes[whitespace] )
-			array_push( $this->whitespace, strtolower( $attributes[whitespace] ) );
+		if( $attributes['whitespace'] )
+			array_push( $this->whitespace, strtolower( $attributes['whitespace'] ) );
 		//	use whitepspace mode from last opened template
 		else				
 			array_push( $this->whitespace, $this->whitespace[( count( $this->whitespace )-1 )] );
@@ -560,10 +560,10 @@ function	setType( $type = "" )
 				//	parse all attributes from a string into an associative array
 				
 				//	Check for name of template, which is a necessary attribute
-				if( !$tmpl_name	=	strtoupper( $attributes[name] ) )
+				if( !$tmpl_name	=	strtoupper( $attributes['name'] ) )
 					die	( "Error in template '".$fname."': missing name for template in line ".$lineno );
 
-				unset( $attributes[name] );
+				unset( $attributes['name'] );
 
 				//	Increment Tag Depth
 				$this->depth++;
@@ -575,26 +575,26 @@ function	setType( $type = "" )
 				$this->template_names[$this->depth]			=	$tmpl_name;
 				
 				//	Check, if attribute "type" was found
-				if( $tmpl_type	=	strtoupper( $attributes[type] ) )
+				if( $tmpl_type	=	strtoupper( $attributes['type'] ) )
 				{
 					$this->template_types[$this->depth]		=	$tmpl_type;
-					$attributes[type]						=	$tmpl_type;
+					$attributes['type']						=	$tmpl_type;
 				}
 				//	No type found => this is a boring standard template
 				else
 				{
-					$attributes[type]						=	"STANDARD";
+					$attributes['type']						=	"STANDARD";
 					$this->template_types[$this->depth]		=	"STANDARD";
 				}
 
 				//	Check for src attribute => external file
-				if( $attributes[src] )
+				if( $attributes['src'] )
 				{
 					//	Store the filename of the external file
-					$filename						=	$attributes[src];
+					$filename						=	$attributes['src'];
 
 					//	Has the external file to be parsed
-					if( $attributes[parse] == "on" )
+					if( $attributes['parse'] == "on" )
 						$this->createParser( $filename );
 
 					//	No parsing, just take the whole content of the file
@@ -611,7 +611,7 @@ function	setType( $type = "" )
 					}
 
 					//	Delete the src attribute, it hasn't to be stored
-					unset( $attributes[src] );
+					unset( $attributes['src'] );
 				}
 				//	No external file => the template is part of teh current file
 				else
@@ -633,7 +633,7 @@ function	setType( $type = "" )
 					//	Template is a condition Tenplate => it needs a condition var	
 					case "CONDITION":
 						//	none found => there is an error
-						if( !$conditionvar	=	$attributes[conditionvar] )
+						if( !$conditionvar	=	$attributes['conditionvar'] )
 							die	( "Error in template '".$fname."': missing conditionvar for template in line ".$lineno );
 							
 						//	conditionvar was found => store it
@@ -643,7 +643,7 @@ function	setType( $type = "" )
 					//	Template is a simple condition Tenplate => it needs required vars
 					case "SIMPLECONDITION":
 						//	none found => there is an error
-						if( $requiredvars = $attributes[requiredvars] )
+						if( $requiredvars = $attributes['requiredvars'] )
 							$this->setAttribute( $this->template_names[$this->depth], "requiredvars", explode( ",", $requiredvars ) );
 						else
 							die	( "Error in template '".$fname."': missing requiredvars attribute for simple condition template in line ".$lineno );
@@ -657,7 +657,7 @@ function	setType( $type = "" )
 				if	( $this->depth > 0 )
 				{
 					//	Is there a placeholder attribute?
-					if( $placeholder = strtoupper( $attributes[placeholder] ) )
+					if( $placeholder = strtoupper( $attributes['placeholder'] ) )
 					{
 						//	placeholder="none" found => DO NOT PUT A PLACEHOLDER IN THE PARENT TEMPLATE!
 						if( $placeholder != "NONE" )
@@ -677,7 +677,7 @@ function	setType( $type = "" )
 			//	Found the beginning of a subtemplate
 			case "sub":
 				//	A subtemplate needs to have a "condition" attribute
-				$condition	=	$attributes[condition];
+				$condition	=	$attributes['condition'];
 
 				//	None found => error
 				if( isset( $condition ) == 0 )
@@ -692,7 +692,7 @@ function	setType( $type = "" )
 			
 			//	Found a link template
 			case "link":
-				$src		=	strtoupper( $attributes[src] );
+				$src		=	strtoupper( $attributes['src'] );
 				
 				if( !$src )
 					die	( "Error in template '".$fname."': missing src attribute for link in line ".$lineno );
@@ -824,7 +824,7 @@ function	setType( $type = "" )
 			return	false;
 			
 		//	Add all vars
-		while	( list( $name, $value ) = each( $variables ) )
+		foreach ($variables as $name => $value)
 		{
 			if( !is_int( $name ) )
 				$this->addVar( $template, $prefix.$name, $value );
@@ -860,7 +860,7 @@ function	setType( $type = "" )
 				if( is_array( $rows[$i] ) )
 				{
 					//	Get key and value
-					while( list( $key,$value ) = each( $rows[$i] ) )
+					foreach ($rows[$i] as $key => $value)
 					{
 						//	check if the array key is an int value => skip it
 						if ( !is_int( $key ) )
@@ -903,7 +903,7 @@ function	setType( $type = "" )
 */
 	function	addGlobalVars( $variables, $prefix = "" )
 	{
-		while	( list( $variable, $value ) = each( $variables ) )
+		foreach ($variables as $variable => $value)
 		{
 			$this->globals[strtoupper( $prefix.$variable )]		=	(string)$value;
 		}
@@ -940,7 +940,7 @@ function	setType( $type = "" )
 		$name	=	strtoupper( $name );
 
 		//	prepend basedirname, if it exists
-		$fname	=	$this->basedir!="" ? $this->basedir."/".$this->source[$name][filename] : $this->source[$name][filename];
+		$fname	=	$this->basedir!="" ? $this->basedir."/".$this->source[$name]['filename'] : $this->source[$name]['filename'];
 
 		if( stristr( $fname, "[part" ) )
 			return	true;
@@ -1025,7 +1025,7 @@ function	setType( $type = "" )
 
 		$vars					=	$this->getVars( $name );
 		$vars[$this->tag_start."PAT_ROW_VAR".$this->tag_end]	=	1;
-		while( list( $tag, $value ) = each( $vars ) )
+		foreach ($vars as $tag => $value)
 		{
 			if( is_array( $value ) )
 			{
@@ -1079,7 +1079,7 @@ function	setType( $type = "" )
 			$current		=	$this->getTemplateContent( $name );
 			
 			$vars			=	$this->getVars( $name );
-			while( list( $tag, $value ) = each( $vars ) )
+			foreach ($vars as $tag => $value)
 				$current		=	str_replace( $tag, $value, $current );
 
 			//	and the dependent Templates
@@ -1119,7 +1119,7 @@ function	setType( $type = "" )
 			//	Pointer im Array auf 0 setzen
 			reset( $this->variables[$template] );
 	
-			while	( list( $variable, $value ) = each( $this->variables[$template] ) )
+			foreach ($this->variables[$template] as $variable => $value)
 			{
 				$tag	=	$this->tag_start.$variable.$this->tag_end;
 
@@ -1135,7 +1135,7 @@ function	setType( $type = "" )
 		{
 			$parentVars		=	$this->getVars( $scope );
 			reset( $parentVars );
-			while( list( $var, $value ) = each( $parentVars ) )
+			foreach ($parentVars as $var => $value)
 			{
 				if( !$vars[$var] )
 					$vars[$var]		=	$value;
@@ -1164,7 +1164,7 @@ function	setType( $type = "" )
 		{
 			reset( $this->globals );
 			
-			while	( list( $variable, $value ) = each( $this->globals ) )
+			foreach ($this->globals as $variable => $value)
 			{
 				$tag	=	$this->tag_start.$variable.$this->tag_end;
 				$temp	=	str_replace( $tag, $value, $temp );
@@ -1216,6 +1216,8 @@ function	setType( $type = "" )
 	function	parseDependencies( $name, &$temp, $mode = "w" )
 	{
 		$name	=	strtoupper( $name );
+		if (!isset($this->dependencies[$name]))
+			return;
 
 		for( $i = 0; $i < count( $this->dependencies[$name] ); $i++ )
 		{
@@ -1581,7 +1583,7 @@ function	setType( $type = "" )
 			echo	"			<table border=\"0\" cellpadding=\"0\" cellspacing=\"1\">\n";
 
 			//	Display all Attributes in table
-			while( list( $key, $value ) = each( $this->attributes[$name] ) )
+			foreach ($this->attributes[$name] as $key => $value)
 			{
 				echo	"				<tr>\n";
 				echo	"					<td class=\"text\"><b>".$key."</b></td>\n";
@@ -1730,7 +1732,7 @@ function	setType( $type = "" )
 				echo	"			<table border=\"0\" cellpadding=\"0\" cellspacing=\"1\">\n";
 	
 				//	Display all Variables in table
-				while( list( $key, $value ) = each( $this->variables[$name] ) )
+				foreach ($this->variables[$name] as $key => $value)
 				{
 					if( is_array( $value ) )
 						$value	=	implode( ", ", $value );

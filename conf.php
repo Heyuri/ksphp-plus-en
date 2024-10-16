@@ -175,14 +175,14 @@ $CONF = array(
   #------------------------- Counters, etc. -------------------------
 
   # * Counter start date
-  'COUNTDATE' => '2022/05/06',
+  'COUNTDATE' => '2024/07/10',
 
   # First part of the counter's file name
   'COUNTFILE' => './count/count',
 
   # Counter breakage resistance level
   # (Values between 3-5 are recommended. The larger the value, the less likely the counter will be erroneous, but the greater the server load)
-  'COUNTLEVEL' => 4,
+  'COUNTLEVEL' => 5,
 
   # File name for real-time participant counting
   #  (Leave it empty if you don't want to use the real-tim participant counting function)
@@ -264,8 +264,8 @@ $CONF = array(
 
   # * Links line
   'BBSLINK' => '
-|| <a href="https://example.com" target="_blank">example.com</a> | 
-<a href="https://example.com" target="_blank">example.net</a> |
+<!-- Example:  |  <a href="http://strange.egoism.jp/script/" target="_blank">くずはすくりぷとPHP</a> -->
+|| <a href="https://example.com/" target="_blank">example.com</a> | <a href="https://example.net/" target="_blank">example.net</a>
 ',
 
   # Message template
@@ -290,7 +290,8 @@ $CONF = array(
   # List of hostname patterns prohibited from posting (Perl5 compatible regular expression)
   'HOSTNAME_POSTDENIED' => array(
     #Example: 'npa\.go\.jp$', */
-      '.example.net',
+      '.example.com',
+      '.example.net'
   ),
 
   # List of hostname patterns prohibited from access (Perl5 compatible regular expression)
@@ -298,10 +299,18 @@ $CONF = array(
     #Example: '\.npa\.go\.jp$',
   ),
 
+  # アクセス禁止エージェント名パターンリスト(Perl5互換正規表現) 20230818 猫・新規追加
+  'HOSTAGENT_BANNED' => array(
+    #例# 'iPad$',
+  'dummy',
+  ),
+
   # Prohibited words
   'NGWORD' => array(
   # Example: 'Viagra','casino'
-  'viagra','Viagra','a href=','スーパーコピー'
+  'viagra',
+  'Viagra',
+  'スーパーコピー'
   ),
 
   # Whether or not to restrict posting from the mobile module by the IP of the mobile device
@@ -318,7 +327,6 @@ $CONF = array(
   # If you attempt to write the handle name into the username field, "(fraudster)" will be added to the post.
   'HANDLENAMES' => array(
     'Shiba' => 'Shiba',
-    'JJY (Fraudster)' => 'nict.go.jp',
     'Fraudster' => 'Administrator'
   ),
 

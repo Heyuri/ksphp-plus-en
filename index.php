@@ -16,19 +16,30 @@ The instructions have been moved to readme.md.
 require_once("./conf.php");
 
 // Version (for copyright notice)
-$CONF['VERSION'] = '[20220506] (ヶ, ＠Links, 擬古猫)';
+$CONF['VERSION'] = '[20240710] (ヶ, ＠Links, 擬古猫)';
 
 /* Launch */
 
 // Set error output level
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
+// Demote "Undefined array key" warnings to notice
+// https://github.com/php/php-src/issues/8906#issuecomment-1172810362
+set_error_handler(function($errno, $error){
+    if (!str_starts_with($error, 'Undefined array key')){
+        return false;  //default error handler.
+    }else{
+        trigger_error($error, E_USER_NOTICE);
+        return true;
+    }
+}, E_WARNING);
+
 if ($CONF['RUNMODE'] == 2) {
     print 'This bulletin board is currently out of service.';
     exit();
 }
 /* Process to prohibit access by host name */
-if (Func::hostname_match($CONF['HOSTNAME_BANNED'])) {
+if (Func::hostname_match($CONF['HOSTNAME_BANNED'],$CONF['HOSTAGENT_BANNED'])) {
     print 'Access is prohibited.';
     exit();
 }
@@ -300,8 +311,11 @@ function tripuse($key) {
         # Default URL
         $this->s['DEFURL'] = $this->c['CGIURL'] . '?' . $this->s['QUERY'];
         # Initialize template variables
-        $this->t->addGlobalVars($this->c);
-        $this->t->addGlobalVars($this->s);
+        $tmp = array_merge($this->c, $this->s);
+        foreach ($tmp as $key => $val) {
+            if (is_array($val)) unset($tmp[$key]);
+        }
+        $this->t->addGlobalVars($tmp);
     }
 
     /**
@@ -852,8 +866,8 @@ class Bbs extends Webapp {
         # Upper main section
         $this->t->displayParsedTemplate('main_upper');
         # Display message
-        while ($msgdata = each($logdatadisp)) {
-            print $this->prtmessage($this->getmessage($msgdata[1]), 0, 0);
+        foreach ( $logdatadisp as $msgdata) {
+            print $this->prtmessage($this->getmessage($msgdata), 0, 0);
         }
         # Message information
         if ($this->s['MSGDISP'] < 0) {
@@ -1164,8 +1178,8 @@ class Bbs extends Webapp {
         $this->t->displayParsedTemplate('searchlist_upper');
 
         $result = $this->msgsearchlist($mode);
-        while ($message = each($result)) {
-            print $this->prtmessage ($message[1], $mode, $this->f['ff']);
+        foreach ($result as $message) {
+            print $this->prtmessage ($message, $mode, $this->f['ff']);
         }
         $success = count($result);
 
@@ -1180,8 +1194,8 @@ class Bbs extends Webapp {
      */
     function msgsearchlist($mode) {
 
+        $fh = NULL;
         if ($this->f['ff']) {
-            $fh = NULL;
             if (preg_match("/^[\w.]+$/", $this->f['ff'])) {
                 $fh = @fopen($this->c['OLDLOGFILEDIR'] . $this->f['ff'], "rb");
             }
@@ -1395,10 +1409,10 @@ class Bbs extends Webapp {
     function searchmessage($varname, $searchvalue, $ismultiple = FALSE, $filename = "") {
         $result = array();
         $logdata = $this->loadmessage($filename);
-        while ($logline = each($logdata)) {
-            $message = $this->getmessage($logline[1]);
+        foreach ($logdata as $logline) {
+            $message = $this->getmessage($logline);
             if (isset($message[$varname]) and $message[$varname] == $searchvalue) {
-                $result[] = $logline[1];
+                $result[] = $logline;
                 if (!$ismultiple) {
                     break;
                 }
@@ -1420,7 +1434,7 @@ class Bbs extends Webapp {
             $this->prterror('The posting function of this bulletin board is currently suspended.');
         }
         /* Prohibit access by host name process */
-        if (Func::hostname_match($this->c['HOSTNAME_POSTDENIED'])) {
+        if (Func::hostname_match($this->c['HOSTNAME_POSTDENIED'], $this->c['HOSTAGENT_BANNED'])) {
             $this->prterror ( 'The posting function of this bulletin board is currently suspended.');
         }
         if ($this->c['BBSMODE_ADMINONLY'] == 1 or ($this->c['BBSMODE_ADMINONLY'] == 2 and !$this->f['f'])) {
@@ -1482,6 +1496,21 @@ class Bbs extends Webapp {
                 }
             }
         }
+
+        #20240204 猫spam判定 (https://php.o0o0.jp/article/php-spam)
+        # 文字数char_num = mb_strlen( $this->f['v'], 'UTF8');
+        # バイト数byte_num = strlen( $this->f['v']);
+
+        $char_num = mb_strlen( $this->f['v'], 'UTF8');
+        $byte_num = strlen( $this->f['v']);
+
+        # 1バイト文字が全体の9割を超えている場合
+        if ((($char_num * 3 - $byte_num) / 2 / $char_num * 100) > 90) {
+            # スパム扱い
+            $this->prterror('この掲示板は現在投稿機能停止中です。');
+        }
+
+
         return $posterr;
     }
 
@@ -1540,12 +1569,22 @@ class Bbs extends Webapp {
             }
             # Trip function (simple deception prevention function)
             else if (strpos($message['USER'], '#') !== FALSE) {
-                $message['USER'] = substr($message['USER'], 0, strpos($message['USER'], '#')) . ' <span class="mut">◆'
-                . substr(preg_replace("/\W/", '', crypt(substr($message['USER'], strpos($message['USER'], '#')), '00')), -7) .$this->tripuse($message['USER']). '</span>';
-            }
-            else if (strpos($message['USER'], '◆') !== FALSE) {
-                $message['USER'] .= ' (fraudster)';
-            }
+                #20210702 猫・管理パスばれ防止
+                if ($this->c['ADMINPOST'] and crypt(substr($message['USER'], 0, strpos($message['USER'], '#')), $this->c['ADMINPOST']) == $this->c['ADMINPOST']) {
+                    $message['USER'] = "<span class=\"muh\"><a href=\"mailto:{$this->c['ADMINMAIL']}\">{$this->c['ADMINNAME']}</a></span>".substr($message['USER'], strpos($message['USER'], '#'));}
+                    #20210923 猫・固定ハンドル名 パスばれ防止
+                    # 固定ハンドル名変換
+                    else if (isset($this->c['HANDLENAMES'])) {
+                        $handlename = array_search(trim(substr($message['USER'], 0, strpos($message['USER'], '#'))), $this->c['HANDLENAMES']);
+                        if ($handlename !== FALSE) {
+                            $message['USER'] = "<span class=\"muh\">{$handlename}</span>".substr($message['USER'], strpos($message['USER'], '#'));
+                        }
+                    }
+                    $message['USER'] = substr($message['USER'], 0, strpos($message['USER'], '#')) . ' <span class="mut">◆' . substr(preg_replace("/\W/", '', crypt(substr($message['USER'], strpos($message['USER'], '#')), '00')), -7) .$this->tripuse($message['USER']). '</span>';
+                }
+                else if (strpos($message['USER'], '◆') !== FALSE) {
+                    $message['USER'] .= ' (fraudster)';
+                }
             # Fixed handle name conversion
             elseif (isset($this->c['HANDLENAMES'])) {
                 $handlename = array_search(trim($message['USER']), $this->c['HANDLENAMES']);
@@ -2168,9 +2207,6 @@ class Func {
         if ($value == '') {
             return $value;
         }
-        if (get_magic_quotes_gpc()) {
-            $value = stripslashes($value);
-        }
         if (!preg_match("/^\w+$/", $value)) {
             $value = htmlspecialchars($value, ENT_QUOTES);
         }
@@ -2405,16 +2441,19 @@ class Func {
      * @param   Array   $hostlist Host name pattern list
      * @return  Boolean Match or not
      */
-    public static function hostname_match($hostlist) {
+    public static function hostname_match($hostlist,$hostagent) {
         if (!$hostlist or !is_array($hostlist)) {
             return;
         }
         $hit = FALSE;
         list ($addr, $host, $proxyflg, $realaddr, $realhost) = Func::getuserenv();
+        $agent = $_SERVER['HTTP_USER_AGENT'];
         foreach ($hostlist as $hostpattern) {
-            if (preg_match("/$hostpattern/", $host) or preg_match("/$hostpattern/", $realhost)) {
-                $hit = TRUE;
-                break;
+            foreach ($hostagent as $hostagentpattern) {
+                if ((preg_match("/$hostpattern/", $host) or preg_match("/$hostpattern/", $realhost)) and preg_match("/$hostagentpattern/", $agent)) {
+                    $hit = TRUE;
+                    break;
+                }
             }
         }
         return $hit;
