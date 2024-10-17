@@ -136,22 +136,22 @@
 
 <!-- Posts -->
 <patTemplate:tmpl name="message">
-    <span class= "ngline">
-        <div class="m" id="m{POSTID}">
-        <span class="nw">
-            <span class="mnum">{POSTID}.</span>
-            <span class="ms">{TITLE}</span>&nbsp;&nbsp;
-            <span class="mu">User:</span>
-            <span class="mun">{USER}</span>&nbsp;&nbsp;
-            <span class="md">Post date:{WDATE}<a id="a{POSTID}">&nbsp;</a><span class="nb">{BTN}</span>
-        </span>
-        <div class="contents">
-            <pre class="msgnormal">{MSG}</pre>
-        </div>
-        <patTemplate:link src="envlist" />
-        </div>
-        <hr>
+<span class= "ngline">
+    <div class="m" id="m{POSTID}">
+    <span class="nw">
+        <span class="mnum">{POSTID}.</span>
+        <span class="ms">{TITLE}</span>&nbsp;&nbsp;
+        <span class="mu">User:</span>
+        <span class="mun">{USER}</span>&nbsp;&nbsp;
+        <span class="md">Post date: {WDATE}<a id="a{POSTID}">&nbsp;</a><span class="nb">{BTN}</span>
     </span>
+    <div class="contents">
+        <pre class="msgnormal">{MSG}</pre>
+    </div>
+    <patTemplate:link src="envlist" />
+    </div>
+</span>
+<hr>
 </patTemplate:tmpl>
 
 <!-- Display environment variables of posts -->

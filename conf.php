@@ -90,13 +90,14 @@ $CONF = array(
   'GZIPU' => 1,
 
   # Number of messages stored
-  'LOGSAVE' => 1000,
+  'LOGSAVE' => 5000,
 
   # Number of messages displayed on a single page
   'MSGDISP' => 40,
 
   # Number of posts to check for duplicate entries
-  'CHECKCOUNT' => 20,
+  ## 'CHECKCOUNT' => 20,
+  'CHECKCOUNT' => 0,
 
   # Maximum number of characters in a single message
   'MAXMSGCOL' => 250,
@@ -117,10 +118,12 @@ $CONF = array(
   'MAXMSGSIZE' => 9000,
 
   # Minimum posting interval (seconds)
-  'MINPOSTSEC' => 2,
+  ## 'MINPOSTSEC' => 2,
+  'MINPOSTSEC' => 0,
 
   # Maximum posting interval (seconds)
-  'MAXPOSTSEC' => 1,
+  ## 'MAXPOSTSEC' => 1,
+  'MAXPOSTSEC' => 0,
 
   # Default value for the automatic link function
   #   0 : Disabled
@@ -128,8 +131,8 @@ $CONF = array(
   'AUTOLINK' => 1,
 
   # Follow-up post screen display
-  #   0 : Open and display a new window (Rebirth)
-  #   1 : Display on the same screen (Honten)
+  #   0 : Open and display a new window (Rebirth-type setting)
+  #   1 : Display on the same screen (Honten-type setting)
   'FOLLOWWIN' => 0,
 
   # Record user IP addresses
@@ -185,7 +188,7 @@ $CONF = array(
   'COUNTLEVEL' => 5,
 
   # File name for real-time participant counting
-  #  (Leave it empty if you don't want to use the real-tim participant counting function)
+  #  (Leave it empty if you don't want to use the real-time participant counting function)
   'CNTFILENAME' => './bbs.cnt',
 
   # Real-time participant count interval (seconds)
@@ -209,8 +212,8 @@ $CONF = array(
 
   # Background color
   # Classic：007f7f (teal)
-  # REBIRTH lineage：004040 (blackboard)
-  # Honten：303c6d (indigo)
+  # REBIRTH-type：004040 (blackboard)
+  # Honten-type：303c6d (indigo)
   'C_BACKGROUND' => '004040',
 
   'C_TEXT' => 'efefef',  # Text color
@@ -264,7 +267,7 @@ $CONF = array(
 
   # * Links line
   'BBSLINK' => '
-<!-- Example:  |  <a href="http://strange.egoism.jp/script/" target="_blank">くずはすくりぷとPHP</a> -->
+<!-- Example:  |  <a href="http://strange.egoism.jp/script/" target="_blank">KuzuhaScriptPHP</a> -->
 || <a href="https://example.com/" target="_blank">example.com</a> | <a href="https://example.net/" target="_blank">example.net</a>
 ',
 
@@ -308,9 +311,9 @@ $CONF = array(
   # Prohibited words
   'NGWORD' => array(
   # Example: 'Viagra','casino'
-  'viagra',
-  'Viagra',
-  'スーパーコピー'
+    'viagra',
+    'Viagra',
+    'スーパーコピー'
   ),
 
   # Whether or not to restrict posting from the mobile module by the IP of the mobile device
@@ -338,5 +341,10 @@ $CONF = array(
   #------------------------- Debugging -------------------------
 
   'SHOW_PRCTIME' => 1,  # Show processing time
+
+  #------------------------- Customization -------------------------
+
+  'CUSTOMHEAD' => '<link href="/css/test.css" rel="stylesheet" type="text/css"><!--<style>body {font-family: Arial, serif;}</style>-->',
+  'CUSTOMSTYLE' => '',
 );
 ?>
