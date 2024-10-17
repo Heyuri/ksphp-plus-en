@@ -346,12 +346,12 @@ function tripuse($key) {
      * @param   String  $customstyle  Custom style sheets in the style tag
      * @return  String  HTML data
      */
-    function prthtmlhead($title = "", $customhead = "", $customstyle = "") {
+    function prthtmlhead($title = ""/*, $customhead = "", $customstyle = ""*/) {
         $this->t->clearTemplate('header');
         $this->t->addVars('header', array(
             'TITLE' => $title,
-            'CUSTOMHEAD' => $customhead,
-            'CUSTOMSTYLE' => $customstyle,
+            ##'CUSTOMHEAD' => $customhead,
+            ##'CUSTOMSTYLE' => $customstyle,
         ));
         $htmlstr = $this->t->getParsedTemplate('header');
         return $htmlstr;
@@ -1465,6 +1465,9 @@ class Bbs extends Webapp {
         if (strlen ($this->f['i']) > $this->c['MAXMAILLENGTH']) {
             $this->prterror ('There are too many characters in the email field. (Up to {MAXMAILLENGTH} characters)');
         }
+        if ($this->f['i']) { ## mod
+            $this->prterror ('SPAM-KUN GTFO!!!'); ## mod
+        } ## mod
         if (strlen ($this->f['t']) > $this->c['MAXTITLELENGTH']) {
             $this->prterror ('There are too many characters in the title field. (Up to {MAXTITLELENGTH} characters)');
         }
@@ -1486,32 +1489,45 @@ class Bbs extends Webapp {
             return $posterr;
         }
 
-        if ($this->c['NGWORD']) {
+        ## if ($this->c['NGWORD']) {
+        ##     foreach ($this->c['NGWORD'] as $ngword) {
+        ##         if (strpos($this->f['v'], $ngword) !== FALSE
+        ##             or strpos($this->f['l'], $ngword) !== FALSE
+        ##             or strpos($this->f['t'], $ngword) !== FALSE
+        ##             or strpos($this->f['u'], $ngword) !== FALSE
+        ##             or strpos($this->f['i'], $ngword) !== FALSE) {
+        ##             $this->prterror ( 'The post contains prohibited words.' );
+        ##         }
+        ##     }
+        ## }
+        if ($this->c['NGWORD']) { ## mod
             foreach ($this->c['NGWORD'] as $ngword) {
-                if (strpos($this->f['v'], $ngword) !== FALSE
-                    or strpos($this->f['l'], $ngword) !== FALSE
-                    or strpos($this->f['t'], $ngword) !== FALSE
-                    or strpos($this->f['u'], $ngword) !== FALSE
-                    or strpos($this->f['i'], $ngword) !== FALSE) {
-                    $this->prterror ( 'The post contains prohibited words.' );
+                $ngword = strtolower($ngword); // Convert prohibited word to lowercase
+                if (
+                    strpos(strtolower($this->f['v']), $ngword) !== FALSE ||
+                    strpos(strtolower($this->f['l']), $ngword) !== FALSE ||
+                    strpos(strtolower($this->f['t']), $ngword) !== FALSE ||
+                    strpos(strtolower($this->f['u']), $ngword) !== FALSE ||
+                    strpos(strtolower($this->f['i']), $ngword) !== FALSE
+                ) {
+                    $this->prterror('The post contains prohibited words.');
                 }
             }
-        }
+        } ## mod end
 
-        #20240204 猫spam判定 (https://php.o0o0.jp/article/php-spam)
-	#20241016 Warning: Uncommenting this will make it not allow posts with maily half width characters, it's unusable on English BBSes
-	#20241016 注：下記のコメントを外すと、リンクを含め、半角文字の多い投稿ができなくなるので勧めません
-        # 文字数char_num = mb_strlen( $this->f['v'], 'UTF8');
-        # バイト数byte_num = strlen( $this->f['v']);
+        #20240204 猫 spam detection (https://php.o0o0.jp/article/php-spam)
+        # Number of characters: char_num = mb_strlen( $this->f['v'], 'UTF8');
+        # Number of bytes: byte_num = strlen( $this->f['v']);
 
-        # $char_num = mb_strlen( $this->f['v'], 'UTF8');
-        # $byte_num = strlen( $this->f['v']);
+        ## $char_num = mb_strlen( $this->f['v'], 'UTF8');
+        ## $byte_num = strlen( $this->f['v']);
 
-        # 1バイト文字が全体の9割を超えている場合
-        # if ((($char_num * 3 - $byte_num) / 2 / $char_num * 100) > 90) {
-        #     # スパム扱い
-        #     $this->prterror('この掲示板は現在投稿機能停止中です。');
-        # }
+        # When single-byte characters makes up more than 90% of the total
+        ## if ((($char_num * 3 - $byte_num) / 2 / $char_num * 100) > 90) {
+        ##     # Treat as spam
+        ##     $this->prterror('This bulletin board\'s post function is currently disabled.');
+        ## }
+        ## disabled by TL: not suitable for languages that use single-byte characters (i.e. English)
 
 
         return $posterr;
@@ -1574,20 +1590,21 @@ class Bbs extends Webapp {
             else if (strpos($message['USER'], '#') !== FALSE) {
                 #20210702 猫・管理パスばれ防止
                 if ($this->c['ADMINPOST'] and crypt(substr($message['USER'], 0, strpos($message['USER'], '#')), $this->c['ADMINPOST']) == $this->c['ADMINPOST']) {
-                    $message['USER'] = "<span class=\"muh\"><a href=\"mailto:{$this->c['ADMINMAIL']}\">{$this->c['ADMINNAME']}</a></span>".substr($message['USER'], strpos($message['USER'], '#'));}
-                    #20210923 猫・固定ハンドル名 パスばれ防止
-                    # 固定ハンドル名変換
-                    else if (isset($this->c['HANDLENAMES'])) {
-                        $handlename = array_search(trim(substr($message['USER'], 0, strpos($message['USER'], '#'))), $this->c['HANDLENAMES']);
-                        if ($handlename !== FALSE) {
-                            $message['USER'] = "<span class=\"muh\">{$handlename}</span>".substr($message['USER'], strpos($message['USER'], '#'));
-                        }
+                    $message['USER'] = "<span class=\"muh\"><a href=\"mailto:{$this->c['ADMINMAIL']}\">{$this->c['ADMINNAME']}</a></span>".substr($message['USER'], strpos($message['USER'], '#'));
+                }
+                #20210923 猫・固定ハンドル名 パスばれ防止
+                # 固定ハンドル名変換
+                else if (isset($this->c['HANDLENAMES'])) {
+                    $handlename = array_search(trim(substr($message['USER'], 0, strpos($message['USER'], '#'))), $this->c['HANDLENAMES']);
+                    if ($handlename !== FALSE) {
+                        $message['USER'] = "<span class=\"muh\">{$handlename}</span>".substr($message['USER'], strpos($message['USER'], '#'));
                     }
-                    $message['USER'] = substr($message['USER'], 0, strpos($message['USER'], '#')) . ' <span class="mut">◆' . substr(preg_replace("/\W/", '', crypt(substr($message['USER'], strpos($message['USER'], '#')), '00')), -7) .$this->tripuse($message['USER']). '</span>';
                 }
-                else if (strpos($message['USER'], '◆') !== FALSE) {
-                    $message['USER'] .= ' (fraudster)';
-                }
+                $message['USER'] = substr($message['USER'], 0, strpos($message['USER'], '#')) . ' <span class="mut">◆' . substr(preg_replace("/\W/", '', crypt(substr($message['USER'], strpos($message['USER'], '#')), '00')), -7) .$this->tripuse($message['USER']). '</span>';
+            }
+            else if (strpos($message['USER'], '◆') !== FALSE) {
+                $message['USER'] .= ' (fraudster)';
+            }
             # Fixed handle name conversion
             elseif (isset($this->c['HANDLENAMES'])) {
                 $handlename = array_search(trim($message['USER']), $this->c['HANDLENAMES']);
