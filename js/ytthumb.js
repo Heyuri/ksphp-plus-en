@@ -87,8 +87,9 @@
 
     // Utility function to extract video ID from YouTube URL
     function getVideoId(url) {
-        const match = url.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&]+)/);
-        return match ? match[1] : null;
+         // Match both youtube.com and youtu.be URLs and extract the video ID
+         const match = url.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&?/]+)/);
+         return match ? match[1] : null;
     }
 
     // Run the script
