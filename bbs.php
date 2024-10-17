@@ -16,7 +16,7 @@ The instructions have been moved to readme.md.
 require_once("./conf.php");
 
 // Version (for copyright notice)
-$CONF['VERSION'] = '[20240710] (ヶ, ＠Links, 擬古猫)';
+$CONF['VERSION'] = '[20241016] (ヶ, ＠Links, 擬古猫)';
 
 /* Launch */
 
