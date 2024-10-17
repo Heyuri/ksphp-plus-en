@@ -7,7 +7,7 @@ $CONF = array(
 
   #------------------------- URLs, etc. -------------------------
 
-  'CGIURL' => './index.php',      # * URL for the bulletin board script (Relative paths are acceptable)
+  'CGIURL' => './bbs.php',      # * URL for the bulletin board script (Relative paths are acceptable)
   'REFCHECKURL' => '',      # URL for the bulletin board script (Describes the full URL for referer checking. If empty, it will not be checked)
   'BBSHOST' => '',      # Host address where the script will be installed (For caller checking. If empty, it will not be checked)
 
