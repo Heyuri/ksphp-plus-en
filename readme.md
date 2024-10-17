@@ -1,14 +1,14 @@
 # KuzuhaScriptPHP+ (くずはすくりぷとPHP+)
 An improved version of the PHP port of KuzuhaScript (くずはすくりぷと).
-I believe it works with PHP versions 4.1.0 - 5.6.x
-Please note that PHP version 7 and 8 are not supported.
+As of 2024/10/16, it only works with PHP8+
+Last legacy PHP (from 4.1.0 to 7.4) version can be found here: [https://github.com/Heyuri/ksphp-plus-en/releases/tag/20240710](https://github.com/Heyuri/ksphp-plus-en/releases/tag/20240710)
 
 [https://hiru.coresv.com/ksphp-plus/](https://hiru.coresv.com/ksphp-plus/)
 
 
 This program is based on the 2005/04/01 modified version of KuzuhaScriptPHP (くずはすくりぷとPHP) by cion (しおん).
 
-This program has been translated to English by [Anonymous-san at Strange World@Heyuri.net](https://ayashii.net/bbs.php?c=08&m=tree&ff=202205.dat&s=3555)
+This program has originally been translated to English by [Anonymous-san at Strange World@Heyuri.net](https://ayashii.net/bbs.php?c=08&m=tree&ff=202205.dat&s=3555) and several anonymous developers from Heyuri have contributed to it since.
 
 
 * [KuzuhaScriptPHP (mirror)](http://qptn.x.fc2.com/up/dauso0059.zip)  
@@ -41,7 +41,7 @@ Incorrect permissions can cause problems and data leaks (such as a post's IP add
 |-- bbs.cnt   600 (writable)      Participant list record file (empty text file)
 |-- bbs.log   600 (writable)      Log file (empty text file)
 |-- conf.php  644 (read-only)     For configuration
-|-- index.php 644 (read-only)     Main bulletin board script
+|-- bbs.php 644 (read-only)     Main bulletin board script
 |-- readme.md                     Instructions (this file)
 |
 |-- vanish.js                     Script for word filtering
@@ -144,6 +144,21 @@ m=u     Execute UNDO
 ### 2022/05/06
 * Moved bbs.php to index.php
 * readme.md: Change recommended permissions settings
+
+### Unknown dates (Heyuri version)
+* Wholly translated to English
+* Added kaomoji buttons
+* Changed line height to 1
+* Commented out the CSS for browsers to break lines
+* Added a javascript for making it easy for users to break lines
+* Commented out Gikoneko(擬古猫)'s YouTube embedding function
+* Implemented a javascript for YouTube embedding
+* Added Javascript for thumbnailing images, by default it's set to only work for Uploader@Heyuri
+
+### 2024/10/16
+* Migrated to PHP8
+* Renamed index.php back to bbs.php
+* Moved JS files to a separate directory
 
 ## ToDo:
 * View posts by thread
