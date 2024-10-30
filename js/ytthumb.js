@@ -60,7 +60,8 @@
                 embedLink.addEventListener('click', () => {
                     if (embedLink.textContent === '[Embed]') {
                         // Embed the video
-                        const videoUrl = link.href.replace('watch?v=', 'embed/');
+                        const videoId = getVideoId(link.href);
+                        const videoUrl = `https://www.youtube.com/embed/${videoId}`;
                         const iframe = document.createElement('iframe');
                         iframe.width = '560';
                         iframe.height = '315';
