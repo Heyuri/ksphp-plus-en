@@ -143,7 +143,17 @@ m=u     Execute UNDO
 
 ### 2022/05/06
 * Moved bbs.php to index.php
-* readme.md: Change recommended permissions settings
+* Minor UI fixes
+
+### 20221127
+* sub/patTemplate.php: Applied Gikoneko(擬古猫)'s fixes
+
+### 20230118
+* Fixed a bug where the tree was not displayed correctly
+
+### 20230520
+* Applied Gikoneko's admin path disclosure prevention (20210923)
+* Applied Gikoneko's fixed handle name password prevention (20210923)
 
 ### Unknown dates (Heyuri version)
 * Wholly translated to English
