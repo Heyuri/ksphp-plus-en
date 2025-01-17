@@ -15,7 +15,7 @@
             checkbox.value = 'checked';
             checkbox.title = 'Alt(+Shift)+T';
             checkbox.id = 'enableThumbnails';
-            checkbox.checked = localStorage.getItem('enableThumbnails') === 'true'; // Load saved state
+            checkbox.checked = localStorage.getItem('enableThumbnails') !== 'false';
 
             smallDiv.insertBefore(label, smallDiv.querySelector('input[type="submit"]'));
             smallDiv.insertBefore(checkbox, smallDiv.querySelector('input[type="submit"]'));
