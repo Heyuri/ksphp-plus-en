@@ -170,6 +170,10 @@ m=u     Execute UNDO
 * Renamed index.php back to bbs.php
 * Moved JS files to a separate directory
 
+### 2025/04/29
+* Fix redirect not working after applying user settings
+* Remove unused configs for customization off conf.php
+
 ## ToDo:
 * View posts by thread
 * Improve speed of unread on tree view
