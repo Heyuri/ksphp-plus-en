@@ -341,10 +341,5 @@ $CONF = array(
   #------------------------- Debugging -------------------------
 
   'SHOW_PRCTIME' => 1,  # Show processing time
-
-  #------------------------- Customization -------------------------
-
-  'CUSTOMHEAD' => '<link href="/css/test.css" rel="stylesheet" type="text/css"><!--<style>body {font-family: Arial, serif;}</style>-->',
-  'CUSTOMSTYLE' => '',
 );
 ?>
