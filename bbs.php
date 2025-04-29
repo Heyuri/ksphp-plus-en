@@ -346,12 +346,12 @@ function tripuse($key) {
      * @param   String  $customstyle  Custom style sheets in the style tag
      * @return  String  HTML data
      */
-    function prthtmlhead($title = ""/*, $customhead = "", $customstyle = ""*/) {
+    function prthtmlhead($title = "", $customhead = "", $customstyle = "") {
         $this->t->clearTemplate('header');
         $this->t->addVars('header', array(
             'TITLE' => $title,
-            ##'CUSTOMHEAD' => $customhead,
-            ##'CUSTOMSTYLE' => $customstyle,
+            'CUSTOMHEAD' => $customhead,
+            'CUSTOMSTYLE' => $customstyle,
         ));
         $htmlstr = $this->t->getParsedTemplate('header');
         return $htmlstr;
