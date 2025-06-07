@@ -2162,7 +2162,6 @@ class Func {
         return $pcode;
     }
 
-
     /**
      * Protect code verification
      *
