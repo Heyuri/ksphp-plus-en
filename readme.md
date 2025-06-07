@@ -171,8 +171,12 @@ m=u     Execute UNDO
 * Moved JS files to a separate directory
 
 ### 2025/04/29
-* Fix redirect not working after applying user settings
-* Remove unused configs for customization off conf.php
+* Fixed redirect not working after applying user settings
+* Removed unused configs for customization off conf.php
+
+### 2025/06/07
+* Added support for IPv6 IPs
+* Changed http header settings to allow embedding from anywhere
 
 ## ToDo:
 * View posts by thread
