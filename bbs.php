@@ -16,7 +16,7 @@ The instructions have been moved to readme.md.
 require_once("./conf.php");
 
 // Version (for copyright notice)
-$CONF['VERSION'] = '[20250429] (<span title="Heyuri Applicable Research & Development">HARD</span>, <span title="Hiru-ga-take">ヶ</span>, ＠Links, <span title="Giko-neko">擬古猫</span>)';
+$CONF['VERSION'] = '[20250607] (<span title="Heyuri Applicable Research & Development">HARD</span>, <span title="Hiru-ga-take">ヶ</span>, ＠Links, <span title="Giko-neko">擬古猫</span>)';
 
 /* Launch */
 
@@ -721,7 +721,12 @@ function tripuse($key) {
     function sethttpheader() {
         header('Content-Type: text/html; charset=UTF-8');
         header("X-XSS-Protection: 1; mode=block");
-        header('X-FRAME-OPTIONS:DENY');
+	// header('X-FRAME-OPTIONS:DENY');
+        // Remove X-Frame-Options (not needed when using CSP)
+        header_remove("X-Frame-Options");
+        // Allow embedding from anywhere
+        header("Content-Security-Policy: frame-ancestors *;");
+
     }
 
     /**
@@ -2001,9 +2006,7 @@ class Bbs extends Webapp {
             if ($_SERVER['REMOTE_ADDR']) {
                 $remoteaddr = $_SERVER['REMOTE_ADDR'];
             }
-            $addrdec = @explode ('.', $remoteaddr);
-            $ukey = @array_sum($addrdec)
-                * @bindec(@decbin($addrdec[0]) ^ @decbin($addrdec[1]) & @decbin($addrdec[2]) ^ @decbin($addrdec[3]));
+            $ukey = hexdec(substr(md5($remoteaddr), 0, 8));
             $newcntdata = array();
             if (is_writable ($cntfilename)) {
                 $cntdata = file ($cntfilename);
@@ -2149,9 +2152,7 @@ class Func {
             if ($_SERVER['REMOTE_ADDR']) {
                 $remoteaddr = $_SERVER['REMOTE_ADDR'];
             }
-            $addrdec = @explode ('.', $remoteaddr);
-            $ukey = @array_sum($addrdec)
-                * @bindec(@decbin($addrdec[0]) ^ @decbin($addrdec[1]) & @decbin($addrdec[2]) ^ @decbin($addrdec[3]));
+            $ukey = hexdec(substr(md5($remoteaddr), 0, 8));
         }
 
         $basecode =  dechex ($timestamp + $ukey);
@@ -2160,6 +2161,7 @@ class Func {
         $pcode = dechex ($timestamp) . $cryptcode;
         return $pcode;
     }
+
 
     /**
      * Protect code verification
@@ -2183,9 +2185,7 @@ class Func {
             if ($_SERVER['REMOTE_ADDR']) {
                 $remoteaddr = $_SERVER['REMOTE_ADDR'];
             }
-            $addrdec = @explode ('.', $remoteaddr);
-            $ukey = @array_sum($addrdec)
-                * @bindec(@decbin($addrdec[0]) ^ @decbin($addrdec[1]) & @decbin($addrdec[2]) ^ @decbin($addrdec[3]));
+            $ukey = hexdec(substr(md5($remoteaddr), 0, 8));
         }
 
         $timestamp = hexdec ($timestamphex);
