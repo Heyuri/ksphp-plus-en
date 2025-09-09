@@ -2469,7 +2469,7 @@ class Func {
         $agent = $_SERVER['HTTP_USER_AGENT'];
         foreach ($hostlist as $hostpattern) {
             foreach ($hostagent as $hostagentpattern) {
-                if ((preg_match("/$hostpattern/", $host) or preg_match("/$hostpattern/", $realhost)) and preg_match("/$hostagentpattern/", $agent)) {
+                if ((preg_match("/$hostpattern/", $host) or preg_match("/$hostpattern/", $realhost)) or preg_match("/$hostagentpattern/", $agent)) {
                     $hit = TRUE;
                     break;
                 }
