@@ -178,6 +178,9 @@ m=u     Execute UNDO
 * Added support for IPv6 IPs
 * Changed http header settings to allow embedding from anywhere
 
+### 2025/09/09
+* Fixed host bans
+
 ## ToDo:
 * View posts by thread
 * Improve speed of unread on tree view
@@ -193,3 +196,4 @@ m=u     Execute UNDO
 ## Known Bugs:
 * Large number of \&nbsp; appearances when searching logs
 * When deleting your own post, sometimes you get a "this post could not be found" error instead of "deletion complete"
+
