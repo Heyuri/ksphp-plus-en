@@ -181,6 +181,12 @@ m=u     Execute UNDO
 ### 2025/09/09
 * Fixed host bans
 
+### 2025/11/08
+* Added vertical scroller CSS for long lines (PC-only)
+* Modified Kaomoji buttons to a fieldset
+* Fixed a bug where clicking User Settings submitted the post if the form wasn't empty
+* Made the ayashii breaker warn the user by glowing for long line posts
+
 ## ToDo:
 * View posts by thread
 * Improve speed of unread on tree view
