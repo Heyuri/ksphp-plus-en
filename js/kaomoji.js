@@ -21,3 +21,23 @@ function insertThisInThere(thisChar, thereId) {
 	var newValue = origValue.substr(0, currentPos) + thisChar + origValue.substr(currentPos);
 	theIdElement.value = newValue;
 }
+
+
+
+
+function toggleKaomojiAlt() {
+	var alt = document.getElementById('kaomoji-alt');
+	var btn = document.getElementById('kaomojiAltToggle');
+	if (!alt) return;
+
+	// just check the hidden attribute
+	if (alt.hidden) {
+		// show
+		alt.hidden = false;
+		if (btn) btn.textContent = "［▲ Show fewer kaomoji］";
+	} else {
+		// hide
+		alt.hidden = true;
+		if (btn) btn.textContent = "［▼ Show more kaomoji］";
+	}
+}
