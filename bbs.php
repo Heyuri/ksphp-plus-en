@@ -1532,7 +1532,7 @@ class Bbs extends Webapp {
         ##             or strpos($this->f['t'], $ngword) !== FALSE
         ##             or strpos($this->f['u'], $ngword) !== FALSE
         ##             or strpos($this->f['i'], $ngword) !== FALSE) {
-        ##             $this->prterror ( 'The post contains prohibited words.' );
+        ##             $this->prterror( T('NGWORD_FOUND') );
         ##         }
         ##     }
         ## }
