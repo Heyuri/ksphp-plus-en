@@ -467,10 +467,7 @@
 <patTemplate:tmpl name="sicheck" visibility="hidden">
 <label for="sim1">Show&nbsp;images</label><input type="checkbox" name="sim" accesskey="S" value="checked"{CHK_SI} title="Alt(+Shift)+S" id="sim1" />&nbsp;
 </patTemplate:tmpl>
-<form method="get" action="{CGIURL}" style="display:inline;">
-    <input type="hidden" name="setup" value="1" />
-    <input type="submit" value="User settings" class="btn" accesskey="C" title="Alt(+Shift)+C, Enter the settings page" />
-</form>
+<input type="submit" name="setup" accesskey="C" value="User settings" class="btn" />
 </div>
 <patTemplate:tmpl name="counterrow">
     <br>
