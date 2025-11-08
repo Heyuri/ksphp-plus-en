@@ -721,7 +721,6 @@ function tripuse($key) {
     function sethttpheader() {
         header('Content-Type: text/html; charset=UTF-8');
         header("X-XSS-Protection: 1; mode=block");
-	// header('X-FRAME-OPTIONS:DENY');
         // Remove X-Frame-Options (not needed when using CSP)
         header_remove("X-Frame-Options");
         // Allow embedding from anywhere
@@ -772,6 +771,11 @@ class Bbs extends Webapp {
         if ($this->c['GZIPU']) {
             ob_start("ob_gzhandler");
         }
+	# Prevent accidental posting when opening settings
+	if ($this->f['setup']) {
+	$this->prtcustom();
+	return;
+	}
         # Post operation
         if ($this->f['m'] == 'p' and trim($this->f['v'])) {
             # Get environment variables
