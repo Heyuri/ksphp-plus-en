@@ -17,12 +17,6 @@ $CONF = array(
   'OLDLOGFILEDIR' => './log/',    # Name of the directory for storing logs (Please put a / at the end. If empty, logs will not be saved)
   'ZIPDIR' => '',       # ZIP archive directory for past log files (Please put a / at the end. If empty, or if gzcompress is unavailable, ZIP archives will not be created)
 
-  # ----HTML template file names----
-  'TEMPLATE' => './sub/template.html',
-  'TEMPLATE_ADMIN' => './sub/tmpladmin.html',
-  'TEMPLATE_LOG' => './sub/tmpllog.html',
-  'TEMPLATE_TREEVIEW' => './sub/tmpltree.html',
-
   #------------------------- Bulletin board name, etc. -------------------------
 
   'BBSTITLE' => 'StrangeWorld@PleaseChange',           # * Bulletin board name
@@ -52,6 +46,7 @@ $CONF = array(
   # Japanese : ja
   # English : en
   'META_LANGUAGE' => 'ja',
+  'TEMPLATE_LANGUAGE' => 'en', // 'ja' or 'en'
 
   #------------------------- Operation settings -------------------------
 
