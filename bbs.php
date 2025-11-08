@@ -20,6 +20,23 @@ $CONF['VERSION'] = '[20251108] (<span title="Heyuri Applicable Research & Develo
 
 /* Launch */
 
+// Determine language-specific subdirectory
+// eg. TEMPLATE_LANGUAGE = 'en' → './sub/en/'
+$tmpl_lang = $CONF['TEMPLATE_LANGUAGE'] ?? 'ja';
+$SUBDIR = './sub/' . $tmpl_lang . '/';
+
+// Load language strings to be used in this file
+$langfile = $SUBDIR . 'lang.php';
+if (file_exists($langfile)) {
+    require_once $langfile;
+} else {
+    die("Language file not found: $langfile");
+}
+// Translation helper
+function T($key) {
+    return $GLOBALS['MSG'][$key] ?? $key;
+}
+
 // Set error output level
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
@@ -35,49 +52,59 @@ set_error_handler(function($errno, $error){
 }, E_WARNING);
 
 if ($CONF['RUNMODE'] == 2) {
-    print 'This bulletin board is currently out of service.';
+    print T('BBS_OUT_OF_SERVICE');
     exit();
 }
 /* Process to prohibit access by host name */
 if (Func::hostname_match($CONF['HOSTNAME_BANNED'],$CONF['HOSTAGENT_BANNED'])) {
-    print 'Access is prohibited.';
+    print T('ACCESS_PROHIBITED');
     exit();
 }
 
+// Override template file paths according to language
+$CONF['TEMPLATE']          = $SUBDIR . 'template.html';
+$CONF['TEMPLATE_ADMIN']    = $SUBDIR . 'tmpladmin.html';
+$CONF['TEMPLATE_LOG']      = $SUBDIR . 'tmpllog.html';
+$CONF['TEMPLATE_TREEVIEW'] = $SUBDIR . 'tmpltree.html';
+
+// ----------------------------------------------------------------------
 // Include file paths
+// ----------------------------------------------------------------------
 
 /**
  * Message log search module
  * @const PHP_GETLOG
  */
-define('PHP_GETLOG', './sub/bbslog.php');
+define('PHP_GETLOG', $SUBDIR . 'bbslog.php');
 
 /**
  * Admin module
  * @const PHP_BBSADMIN
  */
-define('PHP_BBSADMIN', './sub/bbsadmin.php');
+define('PHP_BBSADMIN', $SUBDIR . 'bbsadmin.php');
 
 /**
  * Tree view module
  * @const PHP_TREEVIEW
  */
-define('PHP_TREEVIEW', './sub/bbstree.php');
+define('PHP_TREEVIEW', $SUBDIR . 'bbstree.php');
 
 /**
  * BBS with image upload function module
  * @const PHP_IMAGEBBS
  */
-define('PHP_IMAGEBBS', './sub/bbsimage.php');
+define('PHP_IMAGEBBS', $SUBDIR . 'bbsimage.php');
 
 /**
  * HTML template library
+ * (not language-dependent)
  * @const LIB_TEMPLATE
  */
 define('LIB_TEMPLATE', './sub/patTemplate.php');
 
 /**
  * ZIP file creation library
+ * (not language-dependent)
  * @const LIB_PHPZIP
  */
 define('LIB_PHPZIP', './sub/phpzip.inc.php');
@@ -245,10 +272,10 @@ function tripuse($key) {
      */
     function procForm() {
         if (!$this->c['BBSMODE_IMAGE'] and $_SERVER['CONTENT_LENGTH'] > $this->c['MAXMSGSIZE'] * 5) {
-            $this->prterror('The post contents are too large.');
+            $this->prterror(T('POST_TOO_LARGE'));
         }
         if ($this->c['BBSHOST'] and $_SERVER['HTTP_HOST'] != $this->c['BBSHOST']) {
-            $this->prterror('Invalid caller.');
+            $this->prterror(T('INVALID_CALLER'));
         }
         # Limited to POST or GET only
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -577,7 +604,7 @@ function tripuse($key) {
             $logfilename = $this->c['LOGFILENAME'];
         }
         if (!file_exists($logfilename)) {
-            $this->prterror('Failed to read message');
+            $this->prterror(T('FAILED_TO_READ_MESSAGE'));
         }
         $logdata = file($logfilename);
         return $logdata;
@@ -884,13 +911,13 @@ class Bbs extends Webapp {
             $msgmore = '';
         }
         elseif ($eindex > 0) {
-            $msgmore = "Shown above are posts {$bindex} through {$eindex}, in order of newest to oldest. ";
+		$msgmore = str_replace(['{BINDEX}','{EINDEX}'], [$bindex,$eindex], T('POSTS_RANGE_NEWEST_TO_OLDEST'));
         }
         else {
-            $msgmore = 'There are no unread messages. ';
+            $msgmore = T('NO_UNREAD_MESSAGES') . ' ';
         }
         if ($eindex >= $lastindex) {
-            $msgmore .= 'There are no posts below this point.';
+            $msgmore .= T('NO_POSTS_BELOW');
         }
         $this->t->addVar('main_lower', 'MSGMORE', $msgmore);
         # Navigation buttons
@@ -1083,13 +1110,13 @@ class Bbs extends Webapp {
     function prtfollow($retry = FALSE) {
 
         if (!$this->f['s']) {
-            $this->prterror ( 'There are no parameters.' );
+            $this->prterror(T('NO_PARAMETERS'));
         }
 
         # Administrator authentication
         if ($this->c['BBSMODE_ADMINONLY'] == 1
             and crypt($this->f['u'], $this->c['ADMINPOST']) != $this->c['ADMINPOST']) {
-            $this->prterror('The password is incorrect.');
+            $this->prterror(T('INVALID_PASSWORD'));
         }
         $filename = '';
         if ($this->f['ff']) {
@@ -1097,7 +1124,7 @@ class Bbs extends Webapp {
         }
         $result = $this->searchmessage('POSTID', $this->f['s'], FALSE, $filename);
         if (!$result) {
-            $this->prterror ( 'The specified message could not be found.' );
+            $this->prterror(T('MESSAGE_NOT_FOUND'));
         }
         # Get message
         $message = $this->getmessage($result[0]);
@@ -1132,7 +1159,7 @@ class Bbs extends Webapp {
         $this->t->addVar('follow', 'FF', $this->f['ff']);
         # Display
         $this->sethttpheader();
-        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' Follow-up post');
+        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' ' . T('FOLLOW_UP_POST'));
         $this->t->displayParsedTemplate('follow');
         print $this->prthtmlfoot ();
 
@@ -1148,7 +1175,7 @@ class Bbs extends Webapp {
         # Administrator authentication
         if ($this->c['BBSMODE_ADMINONLY'] != 0
             and crypt($this->f['u'], $this->c['ADMINPOST']) != $this->c['ADMINPOST']) {
-            $this->prterror('The password is incorrect.');
+            $this->prterror(T('INVALID_PASSWORD'));
         }
         # Form section
         $dtitle = "";
@@ -1164,7 +1191,7 @@ class Bbs extends Webapp {
         if ($this->c['AUTOLINK']) $this->t->addVar('newpost', 'CHK_A', ' checked="checked"');
 
         $this->sethttpheader();
-        print $this->prthtmlhead ( "{$this->c['BBSTITLE']} New post" );
+        print $this->prthtmlhead ( $this->c['BBSTITLE'] . ' ' . T('NEW_POST') );
         $this->t->displayParsedTemplate('newpost');
         print $this->prthtmlfoot ();
 
@@ -1178,13 +1205,13 @@ class Bbs extends Webapp {
     function prtsearchlist($mode = "") {
 
         if (!$this->f['s']) {
-            $this->prterror ( 'There are no parameters.' );
+            $this->prterror(T('NO_PARAMETERS'));
         }
         if (!$mode) {
             $mode = $this->f['m'];
         }
         $this->sethttpheader();
-        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' Post search');
+        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' ' . T('POST_SEARCH'));
         $this->t->displayParsedTemplate('searchlist_upper');
 
         $result = $this->msgsearchlist($mode);
@@ -1210,7 +1237,7 @@ class Bbs extends Webapp {
                 $fh = @fopen($this->c['OLDLOGFILEDIR'] . $this->f['ff'], "rb");
             }
             if (!$fh) {
-                $this->prterror ("{$this->f['ff']}を開けませんでした。");
+                $this->prterror ( T('FAILED_TO_OPEN_LOG') . ": {$this->f['ff']}" );
             }
             flock ($fh, 1);
         }
@@ -1271,7 +1298,7 @@ class Bbs extends Webapp {
     function prtputcomplete() {
 
         $this->sethttpheader();
-        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' Post complete');
+        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' ' . T('POST_COMPLETE'));
         $this->t->displayParsedTemplate('postcomplete');
         print $this->prthtmlfoot ();
 
@@ -1377,17 +1404,17 @@ class Bbs extends Webapp {
      */
     function prtundo() {
         if (!$this->f['s']) {
-            $this->prterror ('There are no parameters.');
+            $this->prterror(T('NO_PARAMETERS'));
         }
         if (isset($this->s['UNDO_P']) and $this->s['UNDO_P'] == $this->f['s']) {
             $loglines = $this->searchmessage('POSTID', $this->s['UNDO_P']);
             if (count($loglines) < 1) {
-                $this->prterror ('The corresponding post was not found.');
+                $this->prterror ( T('UNDO_POST_NOT_FOUND') );
             }
             $message = $this->getmessage($loglines[0]);
             $undokey = substr (preg_replace("/\W/", "", crypt($message['PROTECT'], $this->c['ADMINPOST'])), -8);
             if ($undokey != $this->s['UNDO_K']) {
-                $this->prterror ('The deletion of the corresponding post is not permitted.');
+                $this->prterror ( T('UNDO_NOT_PERMITTED') );
             }
             # Erase operation
             require_once(PHP_BBSADMIN);
@@ -1399,10 +1426,10 @@ class Bbs extends Webapp {
             setcookie('undo');
         }
         else {
-            $this->prterror ('The deletion of the corresponding post is not permitted.');
+            $this->prterror ( T('UNDO_NOT_PERMITTED') );
         }
         $this->sethttpheader();
-        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' Deletion complete');
+        print $this->prthtmlhead($this->c['BBSTITLE'] . ' ' . T('DELETION_COMPLETE'));
         $this->t->displayParsedTemplate('undocomplete');
         print $this->prthtmlfoot ();
     }
@@ -1441,50 +1468,50 @@ class Bbs extends Webapp {
     function chkmessage($limithost = TRUE) {
         $posterr = 0;
         if ($this->c['RUNMODE'] == 1) {
-            $this->prterror('The posting function of this bulletin board is currently suspended.');
+            $this->prterror(T('POSTING_SUSPENDED'));
         }
         /* Prohibit access by host name process */
         if (Func::hostname_match($this->c['HOSTNAME_POSTDENIED'], $this->c['HOSTAGENT_BANNED'])) {
-            $this->prterror ( 'The posting function of this bulletin board is currently suspended.');
+            $this->prterror(T('POSTING_SUSPENDED'));
         }
         if ($this->c['BBSMODE_ADMINONLY'] == 1 or ($this->c['BBSMODE_ADMINONLY'] == 2 and !$this->f['f'])) {
             if (crypt($this->f['u'], $this->c['ADMINPOST']) != $this->c['ADMINPOST']) {
-                $this->prterror ( 'Only administrators are allowed to post to the bulletin board.');
+                $this->prterror(T('ADMIN_ONLY_POSTING'));
             }
         }
         if ($_SERVER['HTTP_REFERER'] and $this->c['REFCHECKURL']
             and (strpos($_SERVER['HTTP_REFERER'], $this->c['REFCHECKURL']) === FALSE
             or strpos($_SERVER['HTTP_REFERER'], $this->c['REFCHECKURL']) > 0)) {
-            $this->prterror ( "Posts cannot be made from any URLs besides <br>{$this->c['REFCHECKURL']}." );
+            $this->prterror(T('BAD_REFERER') . "<br>{$this->c['REFCHECKURL']}.");
         }
         foreach (explode ("\r", $this->f['v']) as $line) {
             if (strlen ($line) > $this->c['MAXMSGCOL']) {
-                $this->prterror ('The are too many characters in the post contents.');
+                $this->prterror(T('POST_TOO_WIDE'));
             }
         }
         if (substr_count ($this->f['v'], "\r") > $this->c['MAXMSGLINE'] - 1) {
-            $this->prterror ('There are too many line breaks in the post contents.');
+            $this->prterror(T('POST_TOO_MANY_LINES'));
         }
         if (strlen ($this->f['v']) > $this->c['MAXMSGSIZE']) {
-            $this->prterror ('The overall file size of the post contents is too large.');
+            $this->prterror(T('POST_TOO_LARGE'));
         }
         if (strlen ($this->f['u']) > $this->c['MAXNAMELENGTH']) {
-            $this->prterror ('There are too many characters in the name field. (Up to {MAXNAMELENGTH} characters)');
+            $this->prterror(T('NAME_TOO_LONG'));
         }
         if (strlen ($this->f['i']) > $this->c['MAXMAILLENGTH']) {
-            $this->prterror ('There are too many characters in the email field. (Up to {MAXMAILLENGTH} characters)');
+            $this->prterror(T('EMAIL_TOO_LONG'));
         }
         if ($this->f['i']) { ## mod
-            $this->prterror ('SPAM-KUN GTFO!!!'); ## mod
+            $this->prterror(T('SPAM_KUN')); ## mod
         } ## mod
         if (strlen ($this->f['t']) > $this->c['MAXTITLELENGTH']) {
-            $this->prterror ('There are too many characters in the title field. (Up to {MAXTITLELENGTH} characters)');
+            $this->prterror(T('TITLE_TOO_LONG'));
         }
         {
             $timestamp = Func::pcode_verify ($this->f['pc'], $limithost);
 
             if ((CURRENT_TIME - $timestamp ) < $this->c['MINPOSTSEC'] ) {
-                $this->prterror ( 'The time between posts is too short. Please try again.');
+                $this->prterror(T('POST_TOO_FAST'));
             }
 /*            if ((CURRENT_TIME - $timestamp ) > $this->c['MAXPOSTSEC'] ) {
                 $this->prterror ( 'The time between posts is too long. Please try again.');
@@ -1519,7 +1546,7 @@ class Bbs extends Webapp {
                     strpos(strtolower($this->f['u']), $ngword) !== FALSE ||
                     strpos(strtolower($this->f['i']), $ngword) !== FALSE
                 ) {
-                    $this->prterror('The post contains prohibited words.');
+                    $this->prterror( T('NGWORD_FOUND') );
                 }
             }
         } ## mod end
@@ -1586,14 +1613,14 @@ class Bbs extends Webapp {
                 }
             }
             elseif ($this->c['ADMINPOST'] and $message['USER'] == $this->c['ADMINPOST']) {
-                $message['USER'] = $this->c['ADMINNAME'] . '<span class="muh"> (hacker)</span>';
+                $message['USER'] = $this->c['ADMINNAME'] .'<span class="muh"> (' . T('HACKER_TAG') . ')</span>';
             }
             elseif (!(strpos($message['USER'], $this->c['ADMINNAME']) === FALSE)) {
-                $message['USER'] = $this->c['ADMINNAME'] . '<span class="muh"> (fraudster)</span>';
+                $message['USER'] = $this->c['ADMINNAME'] . '<span class="muh"> (' . T('FRAUDSTER_TAG') . ')</span>';
             }
             # Fixed handle name check
             elseif ($this->c['HANDLENAMES'][trim($message['USER'])]) {
-                $message['USER'] .= '<span class="muh"> (fraudster)</span>';
+                $message['USER'] .= '<span class="muh"> (' . T('FRAUDSTER_TAG') . ')</span>';
             }
             # Trip function (simple deception prevention function)
             else if (strpos($message['USER'], '#') !== FALSE) {
@@ -1638,20 +1665,20 @@ class Bbs extends Webapp {
         if ($message['REFID']) {
             $refdata = $this->searchmessage('POSTID', $message['REFID'], FALSE, $this->f['ff']);
             if (!$refdata) {
-                $this->prterror ('Reference post not found.');
+                $this->prterror ( T('REFERENCE_NOT_FOUND') );
             }
             $refmessage = $this->getmessage($refdata[0]);
             $refmessage['WDATE'] = Func::getdatestr($refmessage['NDATE'], $this->c['DATEFORMAT']);
-            $message['MSG'] .= "\r\r<a href=\"m=f&s={$message['REFID']}&r=&\">Reference: {$refmessage['WDATE']}</a>";
+            $message['MSG'] .= "\r\r<a href=\"m=f&s={$message['REFID']}&r=&\">" . T('REFERENCE_COLON') . " {$refmessage['WDATE']}</a>";
             # Simple self-reply prevention function
             if ($this->c['IPREC'] and $this->c['SHOW_SELFFOLLOW']
                 and $refmessage['PHOST'] != '' and $refmessage['PHOST'] == $message['PHOST']) {
-                $message['USER'] .= '<span class="muh"> (self-reply)</span>';
+                $message['USER'] .= '<span class="muh"> (' . T('SELF_REPLY_TAG') . ')</span>';
             }
         }
         # Check
         if (strlen ($message['MSG']) > $this->c['MAXMSGSIZE']) {
-            $this->prterror ( 'The post contents are too large.' );
+            $this->prterror ( T('POST_CONTENT_TOO_LARGE') );
         }
         return $message;
     }
@@ -1668,7 +1695,7 @@ class Bbs extends Webapp {
         }
         $fh = @fopen($this->c['LOGFILENAME'], "rb+");
         if (!$fh) {
-            $this->prterror ( 'Failed to read message.' );
+            $this->prterror ( T('FAILED_TO_READ_MESSAGE') );
         }
         flock ($fh, 2);
         fseek ($fh, 0, 0);
@@ -1783,11 +1810,11 @@ class Bbs extends Webapp {
                     $oldlogtitle = $this->c['BBSTITLE'] . date(" Y.m.d", CURRENT_TIME);
                 }
                 if (@filesize($oldlogfilename) > $this->c['MAXOLDLOGSIZE']) {
-                    $this->prterror ( 'Message log file exceeds the file size limit' );
+                    $this->prterror ( T('OLDLOG_TOO_LARGE') );
                 }
                 $fh = @fopen($oldlogfilename, "ab");
                 if (!$fh) {
-                    $this->prterror ( 'Failed to output message log' );
+                    $this->prterror ( T('FAILED_TO_OUTPUT_LOG') );
                 }
                 flock ($fh, 2);
                 $isnewdate = FALSE;
@@ -2046,7 +2073,7 @@ class Bbs extends Webapp {
                 fclose ($fh);
             }
             else {
-                return ('Participant file output error');
+                return T('PARTICIPANT_FILE_ERROR');
             }
             return $mbrcount;
         }
