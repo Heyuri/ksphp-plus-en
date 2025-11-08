@@ -33,7 +33,7 @@
     a:active { color: #{C_A_ACTIVE}; }
     a:hover { color: #{C_A_HOVER}; }
     a.help { text-decoration-line: underline; }
-    .deadLink, .deadLink:link, .deadLink:visited, .deadLink:hover, .deadLink:active { opacity: 0.6; text-decoration: line-through; }
+    .deadLink, .deadLink:link, .deadLink:visited, .deadLink:hover, .deadLink:active {opacity: 0.6; text-decoration: line-through; }
     /* Horizontal lines */
     hr { border: 0 none; height: 2px; background-color: #c0c0c0; color: #c0c0c0; }
 
@@ -106,8 +106,11 @@
     input[type="number"] { max-width: 4em; }
     /* Plugins */
     /* Custom */
+    @media screen and (min-width: 1020px) {  div.contents, .msgtree {   overflow-x: auto;  } } 
     {CUSTOMSTYLE}
 </style>
+    
+
 {CUSTOMHEAD}
 </head>
 <body>
@@ -261,63 +264,151 @@
             <br>
             <textarea rows="5" cols="70" name="v" accesskey="4" maxlength="10000" placeholder="" title="Alt(+Shift)+4" id="contents1">{DMSG}</textarea>
         </p>
+        <!-- Default "Quick Access" kaomoji -->
 		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´ー｀)ノ','contents1')" value="ヽ(´ー｀)ノ" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(´ー`)','contents1')" value="(´ー`)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(;´Д`)','contents1')" value="(;´Д`)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´∇`)ノ','contents1')" value="ヽ(´∇`)ノ" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(´∇`)σ','contents1')" value="(´∇`)σ" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(＾Д^)','contents1')" value="(＾Д^)" />
-<br />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(;^Д^)','contents1')" value="(;^Д^)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾉД^､)σ','contents1')" value="(ﾉД^､)σ" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟ∇ﾟ)','contents1')" value="(ﾟ∇ﾟ)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(;ﾟ∇ﾟ)','contents1')" value="(;ﾟ∇ﾟ)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('Σ(;ﾟ∇ﾟ)','contents1')" value="Σ(;ﾟ∇ﾟ)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(;ﾟДﾟ)','contents1')" value="(;ﾟДﾟ)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('Σ(;ﾟДﾟ)','contents1')" value="Σ(;ﾟДﾟ)" />
-<br />
+        <br>
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;`Д´)','contents1')" value="(;`Д´)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´-｀)','contents1')" value="(´-｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´￢`)','contents1')" value="(´￢`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´人｀)','contents1')" value="(´人｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ъ( ﾟｰ^)','contents1')" value="ъ( ﾟｰ^)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(^^;ﾜﾗ','contents1')" value="(^^;ﾜﾗ" />
+
+        <!-- Toggle to expand kaomoji picker -->
+        <br><br>
+        <a href="javascript:void(0);" id="kaomojiAltToggle" class="kaomoji" onclick="toggleKaomojiAlt()" style="text-decoration: none;">［▼ Show more kaomoji］</a>
+
+<!-- Expanded kaomoji picker -->
+<div id="kaomoji-alt" hidden>
+	<p class="pfhelp">
+		Showing more Ayashii World-style kaomoji. Also check out <a target="_blank" href="//mattari.heyuri.net/">Mattari AA</a>.
+	</p>
+
+	<fieldset>
+		<legend>Mattari / Chill</legend>
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´ー｀)','contents1')" value="(´ー｀)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´ー`)','contents1')" value="(´ー`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;´ー｀)','contents1')" value="(;´ー｀)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(;´ー`)','contents1')" value="(;´ー`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(*´ー｀)','contents1')" value="(*´ー｀)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(*´ー`)','contents1')" value="(*´ー`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´ー｀)ノ','contents1')" value="ヽ(´ー｀)ノ" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´ー`)ノ','contents1')" value="ヽ(´ー`)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(;´ー｀)ノ','contents1')" value="ヽ(;´ー｀)ノ" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(;´ー`)ノ','contents1')" value="ヽ(;´ー`)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(*´ー｀)ノ','contents1')" value="ヽ(*´ー｀)ノ" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(*´ー`)ノ','contents1')" value="ヽ(*´ー`)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('～(´ー｀～))))','contents1')" value="～(´ー｀～))))" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´ー`)ﾉ⌒','contents1')" value="(´ー`)ﾉ⌒" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ε≡Ξヽ(´ー｀)ﾉ','contents1')" value="ε≡Ξヽ(´ー｀)ﾉ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ﾉ(´ｰ` )ヽ','contents1')" value="ﾉ(´ｰ` )ヽ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´ｰ`)ﾆﾔﾆﾔ','contents1')" value="(´ｰ`)ﾆﾔﾆﾔ" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´ー｀)人','contents1')" value="(´ー｀)人" />
+	</fieldset>
+    <br>
+	<fieldset>
+		<legend>Dauso / Sad</legend>
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´Д`)','contents1')" value="(´Д`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;´Д`)','contents1')" value="(;´Д`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(*´Д`)','contents1')" value="(*´Д`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´Дﾞ)','contents1')" value="(´Дﾞ)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´－｀)','contents1')" value="(´－｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere(' (´-｀)','contents1')" value=" (´-｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ρ_;)','contents1')" value="(ρ_;)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾉД`､)','contents1')" value="(ﾉД`､)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾉД`)','contents1')" value="(ﾉД`)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(TДT)','contents1')" value="(TДT)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´～`)','contents1')" value="(´～`)" />
+	</fieldset>
+    <br>
+	<fieldset>
+		<legend>Angry / Evil</legend>
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(`Д´)ﾉ','contents1')" value="ヽ(`Д´)ﾉ" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(｀∇´)','contents1')" value="(｀∇´)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(｀ー´)','contents1')" value="(｀ー´)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(｀～´)','contents1')" value="(｀～´)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(;`-´)','contents1')" value="(;`-´)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(`Д´)ノ','contents1')" value="ヽ(`Д´)ノ" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(`Д´)','contents1')" value="(`Д´)" />
-<br />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(;`Д´)','contents1')" value="(;`Д´)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟ血ﾟ#)','contents1')" value="(ﾟ血ﾟ#)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(╬⊙Д⊙)','contents1')" value="(╬⊙Д⊙)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(ρ_;)','contents1')" value="(ρ_;)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(TДT)','contents1')" value="(TДT)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾉД`､)','contents1')" value="(ﾉД`､)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(´Д`)','contents1')" value="(´Д`)" />
-<br />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(´-｀)','contents1')" value="(´-｀)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(´￢`)','contents1')" value="(´￢`)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(ﾟρﾟ)ノ','contents1')" value="ヽ(ﾟρﾟ)ノ" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟー｀)','contents1')" value="(ﾟー｀)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(´π｀)','contents1')" value="(´π｀)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(`ДＴ)','contents1')" value="(`ДＴ)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟ血ﾟ)','contents1')" value="(ﾟ血ﾟ)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(*ﾟдﾟ)','contents1')" value="(*ﾟдﾟ)" />
+	</fieldset>
+    <br>
+	<fieldset>
+		<legend>Ehhh!?</legend>
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟДﾟ)','contents1')" value="(ﾟДﾟ)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟへﾟ)','contents1')" value="(ﾟへﾟ)" />
-<br />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟーﾟ)','contents1')" value="(ﾟーﾟ)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟ∇ﾟ)>','contents1')" value="(ﾟ∇ﾟ)>" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(;ﾟ∇ﾟ)','contents1')" value="(;ﾟ∇ﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('Σ(;ﾟДﾟ)','contents1')" value="Σ(;ﾟДﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟ∇ﾟ)','contents1')" value="(ﾟ∇ﾟ)" />
+	</fieldset>
+    <br>
+	<fieldset>
+		<legend>Gestures / Waves</legend>
+		<input type="button" class="kaomoji" onClick="insertThisInThere('( \'-\')ﾉ','contents1')" value="( '-')ﾉ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('( \'ｰ\')ﾉ','contents1')" value="( 'ｰ')ﾉ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ﾉ(´д｀)','contents1')" value="ﾉ(´д｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('@_@)ﾉ','contents1')" value="@_@)ﾉ" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(●===(`Д´)','contents1')" value="(●===(`Д´)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('（゜ρ゜）ﾉ','contents1')" value="（゜ρ゜）ﾉ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ｰﾟ)ﾉ','contents1')" value="ｰﾟ)ﾉ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟДﾟ)ﾉミ★凸へぇー','contents1')" value="(ﾟДﾟ)ﾉミ★凸へぇー" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(∂_∂)/','contents1')" value="ヽ(∂_∂)/" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´∇`)σ','contents1')" value="(´∇`)σ" />
+	</fieldset>
+    <br>
+	<fieldset>
+		<legend>Sleepy / Other</legend>
+		<input type="button" class="kaomoji" onClick="insertThisInThere('( ´Ο`)ﾌｧｰ','contents1')" value="( ´Ο`)ﾌｧｰ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(-_-)','contents1')" value="(-_-)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ノーヽ)','contents1')" value="(ノーヽ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ノー｀)','contents1')" value="(ノー｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(`ー´)','contents1')" value="(`ー´)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟｰﾟ)','contents1')" value="(ﾟｰﾟ)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(*\'ｰ\')','contents1')" value="(*'ｰ')" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(\'ｰ\')','contents1')" value="('ｰ')" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(´人｀)','contents1')" value="(´人｀)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('ъ( ﾟｰ^)','contents1')" value="ъ( ﾟｰ^)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('（⌒∇⌒ゞ）','contents1')" value="（⌒∇⌒ゞ）" />
-<br />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(^^;ﾜﾗ','contents1')" value="(^^;ﾜﾗ" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('ε≡三ヽ(´ー`)ﾉ','contents1')" value="ε≡三ヽ(´ー`)ﾉ" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('ε≡Ξヽ( ^Д^)ノ','contents1')" value="ε≡Ξヽ( ^Д^)ノ" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´Д`;)ノΞ≡3','contents1')" value="ヽ(´Д`;)ノΞ≡3" />
-<br />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(ﾟーﾟ)','contents1')" value="(ﾟーﾟ)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('(・∀・)','contents1')" value="(・∀・)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('( ´ω`)','contents1')" value="( ´ω`)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('Σ(ﾟдﾟ|||)','contents1')" value="Σ(ﾟдﾟlll)" />
-		<input type="button" class="kaomoji" onClick="insertThisInThere('(´～`)','contents1')" value="(´～`)" />
+	</fieldset>
+    <br>
+    <fieldset>
+		<legend>Drooling</legend>
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´￢｀)','contents1')" value="(´￢｀)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´π｀)','contents1')" value="(´π｀)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(´π`)ノ','contents1')" value="ヽ(´π`)ノ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(*´ρ`)','contents1')" value="(*´ρ`)" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('ヽ(ﾟρﾟ)ノ','contents1')" value="ヽ(ﾟρﾟ)ノ" />
+    </fieldset>
+    <br>
+	<fieldset>
+		<legend>Smoking / Tea Drinking</legend>
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´ー`)y-~~','contents1')" value="(´ー`)y-~~" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(´ｰ`)y-~~','contents1')" value="(´ｰ`)y-~~" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(´Д‘)Y-~~','contents1')" value="(´Д‘)Y-~~" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('~~~===－y(´Д‘)','contents1')" value="~~~===－y(´Д‘)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('~~===-Y(´Д‘)','contents1')" value="~~===-Y(´Д‘)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('~=====(´Д‘)','contents1')" value="~=====(´Д‘)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('~~-yζﾟ)','contents1')" value="~~-yζﾟ)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('゜゜゜゜゜-y(´Д`)。o0○','contents1')" value="゜゜゜゜゜-y(´Д`)。o0○" />
+	</fieldset>
+    <br>
+	<fieldset>
+		<legend>Fun / Misc</legend>
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(^Д^)','contents1')" value="(^Д^)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(;\'-\')','contents1')" value="(;'-')" />
+        <input type="button" class="kaomoji" onClick="insertThisInThere('(⌒∇⌒ゞ)','contents1')" value="(⌒∇⌒ゞ)" />
 		<input type="button" class="kaomoji" onClick="insertThisInThere('┐(ﾟ～ﾟ)┌','contents1')" value="┐(ﾟ～ﾟ)┌" />
-
+        <input type="button" class="kaomoji" onClick="insertThisInThere('（・ω・）','contents1')" value="（・ω・）" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(*\'-\')','contents1')" value="(*'-')" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(*＾▽＾*)','contents1')" value="(*＾▽＾*)" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('わぁい♪ヽ(∇⌒ヽ)(ノ⌒∇）ノわぁい♪','contents1')" value="わぁい♪ヽ(∇⌒ヽ)(ノ⌒∇）ノわぁい♪" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('(σﾟーﾟ)σ','contents1')" value="(σﾟーﾟ)σ" />
+		<input type="button" class="kaomoji" onClick="insertThisInThere('～(ﾟёﾟ～)','contents1')" value="～(ﾟёﾟ～)" />
+	</fieldset>
+</div>
         <p>
             <label for="url1">URL</label>
             <br>
@@ -376,7 +467,10 @@
 <patTemplate:tmpl name="sicheck" visibility="hidden">
 <label for="sim1">Show&nbsp;images</label><input type="checkbox" name="sim" accesskey="S" value="checked"{CHK_SI} title="Alt(+Shift)+S" id="sim1" />&nbsp;
 </patTemplate:tmpl>
-<input type="submit" name="setup" accesskey="C" value="User settings" class="btn" title="Alt(+Shift)+C, Enter the settings page" />
+<form method="get" action="{CGIURL}" style="display:inline;">
+    <input type="hidden" name="setup" value="1" />
+    <input type="submit" value="User settings" class="btn" accesskey="C" title="Alt(+Shift)+C, Enter the settings page" />
+</form>
 </div>
 <patTemplate:tmpl name="counterrow">
     <br>
