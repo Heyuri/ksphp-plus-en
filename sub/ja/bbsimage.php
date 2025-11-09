@@ -2,8 +2,8 @@
 
 /*
 
-KuzuhaScriptPHP ver0.0.7alpha (13:04 2003/02/18)
-BBS with image upload function module
+くずはすくりぷとPHP ver0.0.7alpha (13:04 2003/02/18)
+画像アップロード機能つきBBSモジュール
 
 * Todo
 
@@ -13,40 +13,40 @@ BBS with image upload function module
 */
 
 if(!defined("INCLUDED_FROM_BBS")) {
-    header ("Location: ../bbs.php");
+    header ("Location: ../../bbs.php");
     exit();
 }
 
 
 /*
- * Module-specific settings
+ * モジュール固有設定
  *
- * They will be added to/overwritten by $CONF.
+ * $CONFに追加・上書きされます。
  */
 $GLOBALS['CONF_IMAGEBBS'] = array(
 
-    # Image upload directory (please set it to be writable)
+    # 画像アップロードディレクトリ（書換可に設定してください）
     'UPLOADDIR' => './upload/',
 
-    # File containing latest image upload file number (please set it to be writable)
+    # 画像アップロード用最新ファイル番号記録ファイル（書換可に設定してください）
     'UPLOADIDFILE' => './upload/id.txt',
 
-    # If this string is present in the post content, the uploaded image will be inserted into that position
+    # 投稿内容にこの文字列があるとその位置にアップロード画像が挿入されます
     'IMAGETEXT' => '%image',
 
-    # Total space dedicated to uploaded images (KB)
+    # 保存する画像の総容量(KB)
     'MAX_UPLOADSPACE' => 10000,
 
-    # Maximum width for uploaded images
+    # アップロードする画像の横幅最大値
     'MAX_IMAGEWIDTH' => 1280,
 
-    # Maximum height for uploaded images
+    # アップロードする画像の縦幅最大値
     'MAX_IMAGEHEIGHT' => 1600,
 
-    # Maximum file size for uploaded images (KB)
+    # アップロードする画像サイズの最大値(KB)
     'MAX_IMAGESIZE' => 200,
 
-    # Image scale factor when displayed on the bulletin board (％)
+    # 掲示板に表示する際の画像縮尺率(％)
     'IMAGE_PREVIEW_RESIZE' => 100,
 
 );
@@ -54,17 +54,17 @@ $GLOBALS['CONF_IMAGEBBS'] = array(
 
 
 
-// Include file path
+// インクルードファイルパス
 
 
-/* Launch */
+/* 起動 */
 {
     if (!ini_get('file_uploads')) {
-        print 'Error: The file upload feature is not allowed.';
+        print 'エラー：ファイルアップロード機能が許可されていません。';
         exit();
     }
     if (!function_exists('GetImageSize')) {
-        print 'Error: The image processing feature is not supported.';
+        print 'エラー：画像処理機能がサポートされていません。';
         exit();
     }
 }
@@ -73,7 +73,7 @@ $GLOBALS['CONF_IMAGEBBS'] = array(
 
 
 /**
- * BBS with image upload function module
+ * 画像アップロード機能つきBBSモジュール
  *
  *
  *
@@ -83,7 +83,7 @@ $GLOBALS['CONF_IMAGEBBS'] = array(
 class Imagebbs extends Bbs {
 
     /**
-     * Constructor
+     * コンストラクタ
      *
      */
     function __construct() {
@@ -96,7 +96,7 @@ class Imagebbs extends Bbs {
 
 
     /**
-     * Reflect personal settings
+     * 個人用設定反映
      */
     function refcustom() {
         $this->c['SHOWIMG'] = 1;
@@ -109,13 +109,13 @@ class Imagebbs extends Bbs {
 
 
     /**
-     * Display form section
+     * フォーム部分表示
      *
      * @access  public
-     * @param   String  $dtitle     Initial value of the title form
-     * @param   String  $dmsg       Initial value of the contents form
-     * @param   String  $dlink      Initial value of the link form
-     * @return  String  Form HTML data
+     * @param   String  $dtitle     題名のフォーム初期値
+     * @param   String  $dmsg       内容のフォーム初期値
+     * @param   String  $dlink      リンクのフォーム初期値
+     * @return  String  フォームのHTMLデータ
      */
     function setform($dtitle, $dmsg, $dlink, $mode = '') {
         if ($this->c['SHOWIMG']) $this->t->addVar('sicheck', 'CHK_SI', ' checked="checked"');
@@ -130,10 +130,10 @@ class Imagebbs extends Bbs {
 
 
     /**
-     * Get message from form input
+     * フォーム入力からのメッセージ取得
      *
      * @access  public
-     * @return  Array  Message array
+     * @return  Array  メッセージ配列
      */
     function getformmessage() {
 
@@ -143,38 +143,38 @@ class Imagebbs extends Bbs {
             return $message;
         }
 
-        # Confirm file upload
+        # アップロードファイルの確認
         if ($_FILES['file']['name']) {
 
             if ($_FILES['file']['error'] == 2
             or (file_exists($_FILES['file']['tmp_name'])
             and filesize($_FILES['file']['tmp_name']) > ($this->c['MAX_IMAGESIZE'] * 1024))) {
-                $this->prterror( 'The file size is over ' .$this->c['MAX_IMAGESIZE'] .'KB.');
+                $this->prterror( 'ファイルサイズが' .$this->c['MAX_IMAGESIZE'] .'KBを超えています。');
             }
 
             if ($_FILES['file']['error'] > 0
             or !is_uploaded_file($_FILES['file']['tmp_name'])) {
-                $this->prterror( 'File upload process failed. Code: ' . $_FILES['file']['error']);
+                $this->prterror( 'ファイルアップロードの処理に失敗しました。コード:' . $_FILES['file']['error']);
             }
 
-            # Locking the image upload process
+            # 画像アップロードプロセスのロック
             $fh = @fopen($this->c['UPLOADIDFILE'], "rb+");
             if (!$fh) {
-                $this->prterror ( 'Failed to load the uploaded image file.' );
+                $this->prterror ( 'アップロード記録ファイルの読み込みに失敗しました' );
             }
             flock ($fh, 2);
 
-            # Obtain file ID
+            # ファイルIDの獲得
             $fileid = trim(fgets ($fh, 10));
             if (!$fileid) {
                 $fileid = 0;
             }
 
-            # File type check
+            # ファイルの種類チェック
             $imageinfo = GetImageSize($_FILES['file']['tmp_name']);
             if ($imageinfo[0] > $this->c['MAX_IMAGEWIDTH'] or $imageinfo[1] > $this->c['MAX_IMAGEHEIGHT']) {
                 unlink ($_FILES['file']['tmp_name']);
-                $this->prterror ( 'The width of the image exceeds the limit.' );
+                $this->prterror ( '画像の幅が許可量を超えています。' );
             }
 
             # GIF
@@ -194,7 +194,7 @@ class Imagebbs extends Bbs {
             }
             else {
                 unlink ($_FILES['file']['tmp_name']);
-                $this->prterror ('The file format is incorrect.');
+                $this->prterror ('ファイルの形式が正しくありません。');
             }
 
             $fileid++;
@@ -209,14 +209,14 @@ class Imagebbs extends Bbs {
             $message['FILETAG'] = "<a href=\"{$filename}\" target=\"link\">"
             . "<img src=\"{$filename}\" width=\"{$imageinfo[0]}\" height=\"{$imageinfo[1]}\" border=\"0\" alt=\"{$message['FILEMSG']}\" /></a>";
 
-            # Embedding tags in messages.
+            # メッセージへのタグ埋め込み
             if (strpos($message['MSG'], $this->c['IMAGETEXT']) !== FALSE) {
                 $message['MSG'] = preg_replace("/\Q{$this->c['IMAGETEXT']}\E/", $message['FILETAG'], $message['MSG'], 1);
                 $message['MSG'] = preg_replace("/\Q{$this->c['IMAGETEXT']}\E/", '', $message['MSG']);
             }
             else {
-                if (preg_match("/\r\r<a href=[^<]+>Reference: [^<]+<\/a>$/", $message['MSG'])) {
-                    $message['MSG'] = preg_replace("/(\r\r<a href=[^<]+>Reference: [^<]+<\/a>)$/", "\r\r{$message['FILETAG']}$1", $message['MSG'], 1);
+                if (preg_match("/\r\r<a href=[^<]+>参考：[^<]+<\/a>$/", $message['MSG'])) {
+                    $message['MSG'] = preg_replace("/(\r\r<a href=[^<]+>参考：[^<]+<\/a>)$/", "\r\r{$message['FILETAG']}$1", $message['MSG'], 1);
                 }
                 else {
                     $message['MSG'] .= "\r\r" . $message['FILETAG'];
@@ -239,10 +239,10 @@ class Imagebbs extends Bbs {
 
 
     /**
-     * Message registration process
+     * メッセージ登録処理
      *
      * @access  public
-     * @return  Integer  Error code
+     * @return  Integer  エラーコード
      */
     function putmessage($message) {
 
@@ -269,7 +269,7 @@ class Imagebbs extends Bbs {
             }
             closedir ($dh);
 
-            # Delete old images
+            # 古い画像の削除
             if ($dirspace > $maxspace) {
                 sort($files);
                 foreach ($files as $filepath) {

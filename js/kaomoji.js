@@ -24,6 +24,9 @@ function insertThisInThere(thisChar, thereId) {
 
 
 
+ const isJP = navigator.language.startsWith('ja');
+ const SHOW_MORE = isJP ? '［▼ もっと表示］' : '［▼ Show more kaomoji］';
+ const SHOW_LESS = isJP ? '［▲ 表示を減らす］' : '［▲ Show fewer kaomoji］';
 
 function toggleKaomojiAlt() {
 	var alt = document.getElementById('kaomoji-alt');
@@ -34,10 +37,10 @@ function toggleKaomojiAlt() {
 	if (alt.hidden) {
 		// show
 		alt.hidden = false;
-		if (btn) btn.textContent = "［▲ Show fewer kaomoji］";
+		if (btn) btn.textContent = SHOW_LESS;
 	} else {
 		// hide
 		alt.hidden = true;
-		if (btn) btn.textContent = "［▼ Show more kaomoji］";
+		if (btn) btn.textContent = SHOW_MORE;
 	}
 }
