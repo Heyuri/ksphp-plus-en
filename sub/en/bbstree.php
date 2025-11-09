@@ -15,7 +15,7 @@ http://www.hlla.is.tsukuba.ac.jp/~yas/gen/it-2002-10-28/
 */
 
 if(!defined("INCLUDED_FROM_BBS")) {
-    header ("Location: ../bbs.php?m=tree");
+    header ("Location: ../../bbs.php?m=tree");
     exit();
 }
 
