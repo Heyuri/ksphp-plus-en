@@ -1814,7 +1814,7 @@ class Bbs extends Webapp {
                 }
                 $fh = @fopen($oldlogfilename, "ab");
                 if (!$fh) {
-                    $this->prterror( sprintf(T('FAILED_TO_OPEN_LOG'), $this->f['ff']) );
+                    $this->prterror( T('FAILED_TO_OUTPUT_LOG') );
                 }
                 flock ($fh, 2);
                 $isnewdate = FALSE;
