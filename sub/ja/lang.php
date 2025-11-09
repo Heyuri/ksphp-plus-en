@@ -75,4 +75,9 @@ $MSG = array(
     'TITLE_TREE_VIEW'        => 'ツリー表示',
     'TITLE_DELETE_POST'      => '投稿を消す',
 
+    /*  追加UI文字列  */
+    'URL_REDIRECTION'        => 'URLリダイレクト',
+    'USER_SETTINGS'          => '個人用環境設定',
+    'COUNTER_ERROR'          => 'カウンターエラー',
+
 );
