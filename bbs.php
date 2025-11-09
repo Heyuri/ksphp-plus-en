@@ -20,6 +20,7 @@ $CONF['VERSION'] = '[20251109] (<span title="Heyuri Applicable Research & Develo
 
 /* Launch */
 
+/* experimental
 // Force Japanese language if browser prefers Japanese and the feature is enabled in the config
 if (!empty($CONF['FORCE_JA_FOR_JAPANESE_USERS'])) {
     if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
@@ -30,6 +31,7 @@ if (!empty($CONF['FORCE_JA_FOR_JAPANESE_USERS'])) {
         }
     }
 }
+*/
 
 // Determine language-specific subdirectory
 // eg. TEMPLATE_LANGUAGE = 'en' → './sub/en/'
