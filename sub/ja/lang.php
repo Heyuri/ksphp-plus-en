@@ -57,4 +57,12 @@ $MSG = array(
     'HACKER_TAG'       => '(hacker)',
     'FRAUDSTER_TAG'    => '(fraudster)',
     'SELF_REPLY_TAG'   => '(self-reply)',
+
+	/* HTML titles */
+	'TITLE_FOLLOWUP'         => 'フォロー投稿(返信)',
+	'TITLE_SEARCH_BY_USER'   => '投稿者検索',
+	'TITLE_THREAD_VIEW'      => 'スレッド表示',
+	'TITLE_TREE_VIEW'        => 'ツリー表示',
+	'TITLE_DELETE_POST'      => '投稿を消す',
+
 );
