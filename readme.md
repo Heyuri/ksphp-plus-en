@@ -1,14 +1,14 @@
 # KuzuhaScriptPHP+ (くずはすくりぷとPHP+)
 An improved version of the PHP port of KuzuhaScript (くずはすくりぷと).
 As of 2024/10/16, it only works with PHP8+
-Last legacy PHP (from 4.1.0 to 7.4) version can be found here: [https://github.com/Heyuri/ksphp-plus-en/releases/tag/20240710](https://github.com/Heyuri/ksphp-plus-en/releases/tag/20240710)
+Last legacy PHP (from 4.1.0 to 7.4) version can be found here: [https://github.com/Heyuri/ksphp-plus/releases/tag/20240710](https://github.com/Heyuri/ksphp-plus/releases/tag/20240710)
 
 [https://hiru.coresv.com/ksphp-plus/](https://hiru.coresv.com/ksphp-plus/)
 
 
 This program is based on the 2005/04/01 modified version of KuzuhaScriptPHP (くずはすくりぷとPHP) by cion (しおん).
 
-This program has originally been translated to English by [Anonymous-san at Strange World@Heyuri.net](https://ayashii.net/bbs.php?c=08&m=tree&ff=202205.dat&s=3555) and several anonymous developers from Heyuri have contributed to it since.
+This program has originally been translated to English by [Anonymous-san at Strange World@Heyuri.net](https://dis.heyuri.net/bbs.php?c=08&m=tree&ff=202205.dat&s=3555) and several anonymous developers from Heyuri have contributed to it since.
 
 
 * [KuzuhaScriptPHP (mirror)](http://qptn.x.fc2.com/up/dauso0059.zip)  
@@ -187,6 +187,10 @@ m=u     Execute UNDO
 * Fixed a bug where clicking User Settings submitted the post if the form wasn't empty
 * Made the ayashii breaker warn the user by glowing for long line posts
 
+### 2025/11/09
+* Added complete internationalization for Japanese, English being now optional
+* Renamed software back to KuzuhaScriptPHP+ from KuzuhaScriptPHP+EN
+
 ## ToDo:
 * View posts by thread
 * Improve speed of unread on tree view
@@ -202,4 +206,5 @@ m=u     Execute UNDO
 ## Known Bugs:
 * Large number of \&nbsp; appearances when searching logs
 * When deleting your own post, sometimes you get a "this post could not be found" error instead of "deletion complete"
+
 
