@@ -1613,14 +1613,14 @@ class Bbs extends Webapp {
                 }
             }
             elseif ($this->c['ADMINPOST'] and $message['USER'] == $this->c['ADMINPOST']) {
-                $message['USER'] = $this->c['ADMINNAME'] .'<span class="muh"> (' . T('HACKER_TAG') . ')</span>';
+                $message['USER'] = $this->c['ADMINNAME'] .'<span class="muh">' . T('HACKER_TAG') . '</span>';
             }
             elseif (!(strpos($message['USER'], $this->c['ADMINNAME']) === FALSE)) {
-                $message['USER'] = $this->c['ADMINNAME'] . '<span class="muh"> (' . T('FRAUDSTER_TAG') . ')</span>';
+                $message['USER'] = $this->c['ADMINNAME'] . '<span class="muh">' . T('FRAUDSTER_TAG') . '</span>';
             }
             # Fixed handle name check
             elseif ($this->c['HANDLENAMES'][trim($message['USER'])]) {
-                $message['USER'] .= '<span class="muh"> (' . T('FRAUDSTER_TAG') . ')</span>';
+                $message['USER'] .= '<span class="muh">' . T('FRAUDSTER_TAG') . '</span>';
             }
             # Trip function (simple deception prevention function)
             else if (strpos($message['USER'], '#') !== FALSE) {
