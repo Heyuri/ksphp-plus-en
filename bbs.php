@@ -2301,7 +2301,7 @@ class Func {
         $datestr = date($format, $timestamp);
         if (strrpos($format, '-') !== FALSE) {
             if (!isset($wdays)) {
-                static $wdays = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+                $wdays = [ T('SUNDAY'), T('MONDAY'), T('TUESDAY'), T('WEDNESDAY'), T('THURSDAY'), T('FRIDAY'), T('SATURDAY') ];
             }
             $datestr = str_replace('-', $wdays[date("w", $timestamp)], $datestr);
         }
