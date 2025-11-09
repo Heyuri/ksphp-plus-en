@@ -58,6 +58,16 @@ $MSG = array(
     'FRAUDSTER_TAG'    => '（騙り）',
     'SELF_REPLY_TAG'   => '（自己レス）',
 
+    /*  曜日（フル表記） */
+    'SUNDAY'    => '日',
+    'MONDAY'    => '月',
+    'TUESDAY'   => '火',
+    'WEDNESDAY' => '水',
+    'THURSDAY'  => '木',
+    'FRIDAY'    => '金',
+    'SATURDAY'  => '土',
+
+
     /* HTMLタイトル */
     'TITLE_FOLLOWUP'         => 'フォロー投稿(返信)',
     'TITLE_SEARCH_BY_USER'   => '投稿者検索',
