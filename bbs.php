@@ -1639,7 +1639,7 @@ class Bbs extends Webapp {
                 $message['USER'] = substr($message['USER'], 0, strpos($message['USER'], '#')) . ' <span class="mut">◆' . substr(preg_replace("/\W/", '', crypt(substr($message['USER'], strpos($message['USER'], '#')), '00')), -7) .$this->tripuse($message['USER']). '</span>';
             }
             else if (strpos($message['USER'], '◆') !== FALSE) {
-                $message['USER'] .= ' (fraudster)';
+                $message['USER'] .= T('FRAUDSTER_TAG');
             }
             # Fixed handle name conversion
             elseif (isset($this->c['HANDLENAMES'])) {
