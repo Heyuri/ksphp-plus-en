@@ -1,6 +1,11 @@
 (function() {
     'use strict';
 
+    // Language detection
+    const isJapanese = navigator.language.startsWith('ja');
+    const EMBED_TEXT = isJapanese ? '［埋め込み］' : '[Embed]';
+    const CLOSE_TEXT = isJapanese ? '［閉じる］' : '[Close]';
+
     // Function to handle link modification
     function modifyLinks() {
         const postContents = document.querySelectorAll('.contents pre.msgnormal, .msgtree .ngline');
@@ -18,7 +23,7 @@
 
                 // Create the [Embed] button
                 const embedLink = document.createElement('a');
-                embedLink.textContent = '[Embed]';
+                embedLink.textContent = EMBED_TEXT;
                 embedLink.href = 'javascript:void(0)';
                 embedLink.style.cursor = 'pointer';
                 embedLink.style.color = getComputedStyle(link).color;
@@ -41,7 +46,7 @@
 
                 // Thumbnail hover behavior
                 embedLink.addEventListener('mouseenter', () => {
-                    if (embedLink.textContent === '[Embed]') {
+                    if (embedLink.textContent === EMBED_TEXT) {
                         hoverTimeout = setTimeout(() => {
                             const thumbnailUrl = getThumbnailUrl(info);
                             if (thumbnailUrl) {
@@ -62,7 +67,7 @@
 
                 // Toggle embed on click
                 embedLink.addEventListener('click', () => {
-                    if (embedLink.textContent === '[Embed]') {
+                    if (embedLink.textContent === EMBED_TEXT) {
                         const embedUrl = getEmbedUrl(info);
                         if (embedUrl) {
                             const iframe = document.createElement('iframe');
@@ -74,11 +79,11 @@
 
                             embedWrapper.appendChild(iframe);
                             link.parentElement.insertBefore(embedWrapper, link.nextSibling.nextSibling);
-                            embedLink.textContent = '[Close]';
+                            embedLink.textContent = CLOSE_TEXT;
                         }
-                    } else if (embedLink.textContent === '[Close]') {
+                    } else if (embedLink.textContent === CLOSE_TEXT) {
                         embedWrapper.innerHTML = '';
-                        embedLink.textContent = '[Embed]';
+                        embedLink.textContent = EMBED_TEXT;
                     }
                     thumbnail.style.display = 'none';
                 });
