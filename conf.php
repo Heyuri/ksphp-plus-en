@@ -338,23 +338,23 @@ $CONF = array(
   'C_QMSG' => 'ccc',
   'C_ERROR' => 'f00',  # エラーメッセージの色 (Error message color)
 
-  
+
   // フォロー投稿画面ボタンに表示する文字
   // Text to be displayed on the follow-up post screen button
-  
   'TXTFOLLOW' => '■',
+  
   // 投稿者検索ボタンに表示する文字
   // Text to be displayed on the user search button
-  
   'TXTAUTHOR' => '★',
+
   // スレッド表示ボタンに表示する文字
   // Text to be displayed on the thread view button
-  
   'TXTTHREAD' => '◆',
+
   // ツリー表示ボタンに表示する文字
   // Text to be displayed on the tree view button
-  
   'TXTTREE' => '木',
+
   // UNDO(自分が直前に投稿した記事のみ消去)ボタンに表示する文字
   // Text to be displayed on the UNDO (Delete only the last post you posted) button
   ## TL Note: You can set to 'Undo' for English instances
