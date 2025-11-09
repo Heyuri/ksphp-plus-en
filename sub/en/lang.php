@@ -58,9 +58,6 @@ $MSG = array(
     'FRAUDSTER_TAG'    => 'fraudster',
     'SELF_REPLY_TAG'   => 'self-reply',
 
-    /* Content-size check while building message */
-    'POST_CONTENT_TOO_LARGE' => 'The post contents are too large.',
-
 	/* HTML titles */
 	'TITLE_FOLLOWUP'         => 'Follow-up post (reply)',
 	'TITLE_SEARCH_BY_USER'   => 'Search by user',
