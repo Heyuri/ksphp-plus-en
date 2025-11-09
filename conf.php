@@ -42,15 +42,15 @@ $CONF = array(
 
   // * 掲示板の名前
   // * Bulletin board name
-  // TL note: Ayashii World titles usually take the form of "AyashiiWorld@[web host name]
-  // TL note: StrangeWorld@ is the common English way to start it
+  ## TL note: Ayashii World titles usually take the form of "AyashiiWorld@[web host name]
+  ## TL note: StrangeWorld@ is the common English way to start it
   'BBSTITLE' => 'あやしいわーるど＠',
 
   // * 広報室のURL
   // * URL for the Public Relations Office (home/information page)
   'INFOPAGE' => '/',
 
-    #------------------------------ 管理設定 ---------------------------------
+  #------------------------------- 管理設定 ----------------------------------
   #------------------------- Administrator settings -------------------------
 
   // * 管理人の名前
@@ -85,7 +85,7 @@ $CONF = array(
 
   // コンテンツの言語を指定してください。通常は日本語(ja)
   // Please specify the language of the content. Typically you'd use Japanese (ja)
-  // TL note: Ayashii World-style AA (ASCII art) may not render correctly using English (en) without some additional CSS to change the font to MS Gothic or another compatible font
+  ## TL note: Ayashii World-style AA (ASCII art) may not render correctly using English (en) without some additional CSS to change the font to MS Gothic or another compatible font
   // 日本語：ja
   // English : en
   'META_LANGUAGE' => 'ja',
@@ -357,7 +357,7 @@ $CONF = array(
   'TXTTREE' => '木',
   // UNDO(自分が直前に投稿した記事のみ消去)ボタンに表示する文字
   // Text to be displayed on the UNDO (Delete only the last post you posted) button
-  // TL Note: You can set to 'Undo' for English instances
+  ## TL Note: You can set to 'Undo' for English instances
   'TXTUNDO' => '消去',
 
   // フォロー投稿時に相手の投稿者名に付加する文字（一般の掲示板では「さん」などを付けると良いでしょう）
@@ -408,7 +408,7 @@ $CONF = array(
 
   // * リンク行
   // * Links line
-  // TL Note: Commented-out-in-HTML line below is an example.
+  ## TL Note: Commented-out-in-HTML line below is an example.
   'BBSLINK' => '
 <!-- 例:  |  <a href="http://strange.egoism.jp/script/" target="_blank">くずはすくりぷとPHP</a> -->
 || <a href="https://example.com/" target="_blank">example.com</a> | <a href="https://example.net/" target="_blank">example.net</a>
@@ -436,7 +436,7 @@ $CONF = array(
   #------------------------------ アクセス制限など --------------------------------
   #------------------------- Access restrictions, etc. -------------------------
 
-  // TL Note: Commented out Lines starting with 例 are examples. 例 means example.
+  ## TL Note: Commented out Lines starting with 例 are examples. 例 means example.
   
   // 投稿禁止ホスト名パターンリスト(Perl5互換正規表現)
   // List of hostname patterns prohibited from posting (Perl5 compatible regular expression)
