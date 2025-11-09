@@ -1,16 +1,26 @@
 <?php
 
+  # "*"がついている項目は変更・確認が必要です。
   # Items marked "*" need to be changed or confirmed
 
+/* 共通設定 */
 /* Common settings */
 $CONF = array(
 
+  #-------------------------- URLなど ---------------------------
   #------------------------- URLs, etc. -------------------------
 
-  'CGIURL' => './bbs.php',      # * URL for the bulletin board script (Relative paths are acceptable)
-  'REFCHECKURL' => '',      # URL for the bulletin board script (Describes the full URL for referer checking. If empty, it will not be checked)
-  'BBSHOST' => '',      # Host address where the script will be installed (For caller checking. If empty, it will not be checked)
+  // * 掲示板スクリプトのURL（相対パス可）
+  // * URL for the bulletin board script (Relative paths are acceptable)
+  'CGIURL' => './bbs.php',
+  // 掲示板スクリプトのURL（Refererチェック用、フルURLを記述。空にするとチェックしません）
+  // URL for the bulletin board script (Describes the full URL for referer checking. If empty, it will not be checked)
+  'REFCHECKURL' => '',
+  // スクリプトを設置するホストアドレス（呼び出し元チェック用。空にするとチェックしません）
+  // Host address where the script will be installed (For caller checking. If empty, it will not be checked)
+  'BBSHOST' => '',
 
+  #-------------------------- ファイルとディレクトリ --------------------------
   #------------------------- Files and directories -------------------------
 
   'LOGFILENAME' => './bbs.log',   # Log file name
