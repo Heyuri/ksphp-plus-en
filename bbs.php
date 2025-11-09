@@ -417,7 +417,7 @@ function tripuse($key) {
      */
     function prtredirect($redirecturl) {
         $this->sethttpheader();
-        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' - URL redirection',
+        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' - ' . T('URL_REDIRECTION'),
             "<meta http-equiv=\"refresh\" content=\"1;url={$redirecturl}\">\n");
         $this->t->addVar('redirect', 'REDIRECTURL', $redirecturl);
         $this->t->displayParsedTemplate('redirect');
@@ -1326,7 +1326,7 @@ class Bbs extends Webapp {
         $this->t->addVar('custom', 'MODE', $mode);
 
         $this->sethttpheader();
-        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' User settings');
+        print $this->prthtmlhead ($this->c['BBSTITLE'] . ' ' . T('USER_SETTINGS'));
         $this->t->displayParsedTemplate('custom');
         print $this->prthtmlfoot ();
     }
@@ -2016,7 +2016,7 @@ class Bbs extends Webapp {
             fclose ($fh);
             return $maxcount;
         } else {
-            return 'Counter error';
+            return T('COUNTER_ERROR');
         }
     }
 
