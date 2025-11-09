@@ -1673,7 +1673,7 @@ class Bbs extends Webapp {
             # Simple self-reply prevention function
             if ($this->c['IPREC'] and $this->c['SHOW_SELFFOLLOW']
                 and $refmessage['PHOST'] != '' and $refmessage['PHOST'] == $message['PHOST']) {
-                $message['USER'] .= '<span class="muh"> (' . T('SELF_REPLY_TAG') . ')</span>';
+                $message['USER'] .= '<span class="muh">' . T('SELF_REPLY_TAG') . '</span>';
             }
         }
         # Check
