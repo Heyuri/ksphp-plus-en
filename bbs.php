@@ -1237,7 +1237,7 @@ class Bbs extends Webapp {
                 $fh = @fopen($this->c['OLDLOGFILEDIR'] . $this->f['ff'], "rb");
             }
             if (!$fh) {
-                $this->prterror ( T('FAILED_TO_OPEN_LOG') . ": {$this->f['ff']}" );
+                $this->prterror( sprintf(T('FAILED_TO_OPEN_LOG'), $this->f['ff']) );
             }
             flock ($fh, 1);
         }
