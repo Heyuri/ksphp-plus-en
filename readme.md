@@ -194,17 +194,15 @@ m=u     Execute UNDO
 ## ToDo:
 * View posts by thread
 * Improve speed of unread on tree view
-* Setting for whether or not to use tree view
 * Setting for whether or not to use the mobile module
-* Improve link target
 * Form does not appear on the new post screen
-* "Record only anonymous proxies" setting
 * Proper use of multi-byte functions and jcode
 * Setting for UNDO expiration date
-* Checkbox for automatic line breaking
+* Have uploader thumbnailing javascript to easily support other instances of Uploader softwares
 
 ## Known Bugs:
 * Large number of \&nbsp; appearances when searching logs
 * When deleting your own post, sometimes you get a "this post could not be found" error instead of "deletion complete"
+
 
 
