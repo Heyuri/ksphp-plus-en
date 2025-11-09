@@ -2,18 +2,18 @@
 
 $MSG = array(
 
-    /* Service / access */
+    /* サービス / アクセス関連 */
     'BBS_OUT_OF_SERVICE'      => 'This bulletin board is currently out of service.',
     'ACCESS_PROHIBITED'       => 'Access is prohibited.',
 
-    /* Generic / IO errors */
+    /* 汎用 / 入出力エラー */
     'FAILED_TO_READ_MESSAGE'  => 'メッセージ読み込みに失敗しました',
     'FAILED_TO_OPEN_LOG'      => '過去ログファイルがサイズ制限を超えています',
     'FAILED_TO_OUTPUT_LOG'    => '過去ログ出力に失敗しました',
     'OLDLOG_TOO_LARGE'        => '過去ログファイルがサイズ制限を超えています',
     'PARTICIPANT_FILE_ERROR'  => '参加者ファイル出力エラー',
 
-    /* Posting / validation */
+    /* 投稿 / 入力チェック */
     'POSTING_SUSPENDED'       => 'この掲示板は現在投稿機能停止中です。',
     'ADMIN_ONLY_POSTING'      => '掲示板への投稿は管理者のみ許可されています。',
     'BAD_REFERER'             => '投稿画面のＵＲＬが <br>{REFCHECKURL}<br>以外からの投稿はできません。',
@@ -27,42 +27,42 @@ $MSG = array(
     'NGWORD_FOUND'            => '投稿禁止語句が含まれています。',
     'SPAM_KUN'                => 'SPAM-KUN GTFO!!!',
 
-    /* Caller / request */
+    /* 呼び出し元 / リクエスト関連 */
     'INVALID_CALLER'          => '呼び出し元が不正です。',
     'NO_PARAMETERS'           => 'パラメータがありません。',
     'INVALID_PASSWORD'        => 'パスワードが違います。',
 
-    /* Follow / search / reference */
+    /* フォロー / 検索 / 参照 */
     'MESSAGE_NOT_FOUND'       => '指定されたメッセージが見つかりません。',
     'REFERENCE_NOT_FOUND'     => '参照記事が見つかりません。',
     'REFERENCE_COLON'         => 'Reference:',
     'FOLLOW_UP_POST'          => 'フォロー投稿',
     'POST_SEARCH'             => '投稿検索',
 
-    /* Completion / undo */
+    /* 完了 / 取り消し */
     'POST_COMPLETE'           => '書き込み完了',
     'DELETION_COMPLETE'       => '消去完了',
     'UNDO_POST_NOT_FOUND'     => '該当記事は見つかりませんでした。',
     'UNDO_NOT_PERMITTED'      => '該当記事の消去は許可されていません。',
 
-    /* Main list footer messages */
+    /* メイン一覧のフッターメッセージ */
     'POSTS_RANGE_NEWEST_TO_OLDEST' => '以上は、現在登録されている新着順{BINDEX}番目から{EINDEX}番目までの記事です。 ',
     'NO_UNREAD_MESSAGES'           => '未読メッセージはありません。',
     'NO_POSTS_BELOW'               => 'これ以下の記事はありません。',
 
-    /* New post page */
+    /* 新規投稿ページ */
     'NEW_POST' => '新規投稿',
 
-    /* Labels / tags inserted into messages */
-    'HACKER_TAG'       => '(hacker)',
-    'FRAUDSTER_TAG'    => '(fraudster)',
-    'SELF_REPLY_TAG'   => '(self-reply)',
+    /*  名前に挿入されるタグ */
+    'HACKER_TAG'       => 'hacker',
+    'FRAUDSTER_TAG'    => 'fraudster',
+    'SELF_REPLY_TAG'   => 'self-reply',
 
-	/* HTML titles */
-	'TITLE_FOLLOWUP'         => 'フォロー投稿(返信)',
-	'TITLE_SEARCH_BY_USER'   => '投稿者検索',
-	'TITLE_THREAD_VIEW'      => 'スレッド表示',
-	'TITLE_TREE_VIEW'        => 'ツリー表示',
-	'TITLE_DELETE_POST'      => '投稿を消す',
+    /* HTMLタイトル */
+    'TITLE_FOLLOWUP'         => 'フォロー投稿(返信)',
+    'TITLE_SEARCH_BY_USER'   => '投稿者検索',
+    'TITLE_THREAD_VIEW'      => 'スレッド表示',
+    'TITLE_TREE_VIEW'        => 'ツリー表示',
+    'TITLE_DELETE_POST'      => '投稿を消す',
 
 );
