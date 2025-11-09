@@ -1678,7 +1678,7 @@ class Bbs extends Webapp {
         }
         # Check
         if (strlen ($message['MSG']) > $this->c['MAXMSGSIZE']) {
-            $this->prterror ( T('POST_CONTENT_TOO_LARGE') );
+            $this->prterror ( T('POST_TOO_LARGE') );
         }
         return $message;
     }
