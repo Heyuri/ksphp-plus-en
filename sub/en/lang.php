@@ -58,6 +58,16 @@ $MSG = array(
     'FRAUDSTER_TAG'    => ' (fraudster',
     'SELF_REPLY_TAG'   => ' (self-reply)',
 
+    /* Weekdays */
+    'SUNDAY'    => 'Sun',
+    'MONDAY'    => 'Mon',
+    'TUESDAY'   => 'Tue',
+    'WEDNESDAY' => 'Wed',
+    'THURSDAY'  => 'Thu',
+    'FRIDAY'    => 'Fri',
+    'SATURDAY'  => 'Sat',
+
+
     /* HTML titles */
     'TITLE_FOLLOWUP'         => 'Follow-up post (reply)',
     'TITLE_SEARCH_BY_USER'   => 'Search by user',
