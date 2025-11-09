@@ -60,4 +60,12 @@ $MSG = array(
 
     /* Content-size check while building message */
     'POST_CONTENT_TOO_LARGE' => 'The post contents are too large.',
+
+	/* HTML titles */
+	'TITLE_FOLLOWUP'         => 'Follow-up post (reply)',
+	'TITLE_SEARCH_BY_USER'   => 'Search by user',
+	'TITLE_THREAD_VIEW'      => 'Thread view',
+	'TITLE_TREE_VIEW'        => 'Tree view',
+	'TITLE_DELETE_POST'      => 'Delete post',
+
 );
