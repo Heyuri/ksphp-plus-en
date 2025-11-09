@@ -95,11 +95,12 @@ $CONF = array(
   // Change to 'en' for English.
   'TEMPLATE_LANGUAGE' => 'ja',
 
+  // 実験的 (experimental)
   // 日本語ブラウザ利用者には強制的に日本語UIを使用するかどうか
   // Whether to force Japanese UI for users whose browser language is Japanese.
   #   0 : 無効 (Disabled)
   #   1 : 有効 (Enabled)
-  'FORCE_JA_FOR_JAPANESE_USERS' => 1,
+  #'FORCE_JA_FOR_JAPANESE_USERS' => 1,
 
   #------------------------------ 動作設定 -------------------------------
   #------------------------- Operation settings -------------------------
