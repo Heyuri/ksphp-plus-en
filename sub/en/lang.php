@@ -54,15 +54,15 @@ $MSG = array(
     'NEW_POST' => 'New post',
 
     /* Labels / tags inserted into messages */
-    'HACKER_TAG'       => 'hacker',
-    'FRAUDSTER_TAG'    => 'fraudster',
-    'SELF_REPLY_TAG'   => 'self-reply',
+    'HACKER_TAG'       => ' (hacker)',
+    'FRAUDSTER_TAG'    => ' (fraudster',
+    'SELF_REPLY_TAG'   => ' (self-reply)',
 
-	/* HTML titles */
-	'TITLE_FOLLOWUP'         => 'Follow-up post (reply)',
-	'TITLE_SEARCH_BY_USER'   => 'Search by user',
-	'TITLE_THREAD_VIEW'      => 'Thread view',
-	'TITLE_TREE_VIEW'        => 'Tree view',
-	'TITLE_DELETE_POST'      => 'Delete post',
+    /* HTML titles */
+    'TITLE_FOLLOWUP'         => 'Follow-up post (reply)',
+    'TITLE_SEARCH_BY_USER'   => 'Search by user',
+    'TITLE_THREAD_VIEW'      => 'Thread view',
+    'TITLE_TREE_VIEW'        => 'Tree view',
+    'TITLE_DELETE_POST'      => 'Delete post',
 
 );
