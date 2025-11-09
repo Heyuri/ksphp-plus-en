@@ -3,12 +3,12 @@
 $MSG = array(
 
     /* サービス / アクセス関連 */
-    'BBS_OUT_OF_SERVICE'      => 'This bulletin board is currently out of service.',
-    'ACCESS_PROHIBITED'       => 'Access is prohibited.',
+    'BBS_OUT_OF_SERVICE'      => 'この掲示板は現在停止中です。',
+    'ACCESS_PROHIBITED'       => 'アクセスが禁止されています。',
 
     /* 汎用 / 入出力エラー */
     'FAILED_TO_READ_MESSAGE'  => 'メッセージ読み込みに失敗しました',
-    'FAILED_TO_OPEN_LOG'      => '過去ログファイルがサイズ制限を超えています',
+    'FAILED_TO_OPEN_LOG' => '%sを開けませんでした。',
     'FAILED_TO_OUTPUT_LOG'    => '過去ログ出力に失敗しました',
     'OLDLOG_TOO_LARGE'        => '過去ログファイルがサイズ制限を超えています',
     'PARTICIPANT_FILE_ERROR'  => '参加者ファイル出力エラー',
@@ -20,12 +20,12 @@ $MSG = array(
     'POST_TOO_WIDE'           => '投稿内容の桁数が大きすぎます。',
     'POST_TOO_MANY_LINES'     => '投稿内容の行数が大きすぎます。',
     'POST_TOO_LARGE'          => '投稿内容が大きすぎます。',
-    'NAME_TOO_LONG'           => '投稿者欄の文字数が多すぎます。 ( {MAXNAMELENGTH} 文字まで)',
-    'EMAIL_TOO_LONG'          => 'メール欄の文字数が多すぎます。 ( {MAXMAILLENGTH} 文字まで)',
-    'TITLE_TOO_LONG'          => 'タイトル欄の文字が多すぎます。 ( {MAXTITLELENGTH} 文字まで)',
+    'NAME_TOO_LONG'           => '投稿者の文字数が多すぎます。（{MAXNAMELENGTH}文字まで）',
+    'EMAIL_TOO_LONG'          => 'メールの文字数が多すぎます。（{MAXMAILLENGTH}文字まで）',
+    'TITLE_TOO_LONG'          => '題名の文字数が多すぎます。（{MAXTITLELENGTH}文字まで）',
     'POST_TOO_FAST'           => '投稿間隔が短すぎます。もう一度やり直して下さい。',
     'NGWORD_FOUND'            => '投稿禁止語句が含まれています。',
-    'SPAM_KUN'                => 'SPAM-KUN GTFO!!!',
+    'SPAM_KUN'                => 'スパムのせいでメール欄が空白ではないと否定されます',
 
     /* 呼び出し元 / リクエスト関連 */
     'INVALID_CALLER'          => '呼び出し元が不正です。',
@@ -35,7 +35,7 @@ $MSG = array(
     /* フォロー / 検索 / 参照 */
     'MESSAGE_NOT_FOUND'       => '指定されたメッセージが見つかりません。',
     'REFERENCE_NOT_FOUND'     => '参照記事が見つかりません。',
-    'REFERENCE_COLON'         => 'Reference:',
+    'REFERENCE_COLON'         => '参考：',
     'FOLLOW_UP_POST'          => 'フォロー投稿',
     'POST_SEARCH'             => '投稿検索',
 
@@ -54,9 +54,9 @@ $MSG = array(
     'NEW_POST' => '新規投稿',
 
     /*  名前に挿入されるタグ */
-    'HACKER_TAG'       => 'hacker',
-    'FRAUDSTER_TAG'    => 'fraudster',
-    'SELF_REPLY_TAG'   => 'self-reply',
+    'HACKER_TAG'       => '（ハカー）',
+    'FRAUDSTER_TAG'    => '（騙り）',
+    'SELF_REPLY_TAG'   => '（自己レス）',
 
     /* HTMLタイトル */
     'TITLE_FOLLOWUP'         => 'フォロー投稿(返信)',
