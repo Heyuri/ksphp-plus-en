@@ -75,4 +75,9 @@ $MSG = array(
     'TITLE_TREE_VIEW'        => 'Tree view',
     'TITLE_DELETE_POST'      => 'Delete post',
 
+    /*  Additional UI strings  */
+    'URL_REDIRECTION'        => 'URL redirection',
+    'USER_SETTINGS'          => 'User settings',
+    'COUNTER_ERROR'          => 'Counter error',
+
 );
