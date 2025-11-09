@@ -477,7 +477,7 @@ function tripuse($key) {
                 if ($mode == 1) {
                     $message['BTNFOLLOW'] .= "&amp;ff=$tlog";
                 }
-                $message['BTNFOLLOW'] .= "\"$newwin $lnk_class title=\"Follow-up post (reply)\" >{$this->c['TXTFOLLOW']}</a>";
+                $message['BTNFOLLOW'] .= "\"$newwin $lnk_class title=\"" . T('TITLE_FOLLOWUP') . "\" >{$this->c['TXTFOLLOW']}</a>";
             }
             # Search by user button
             $message['BTNAUTHOR'] = '';
@@ -490,7 +490,7 @@ function tripuse($key) {
                 if ($mode == 1) {
                     $message['BTNAUTHOR'] .= "&amp;ff=$tlog";
                 }
-                $message['BTNAUTHOR'] .= "\" target=\"link\" $lnk_class title=\"Search by user\" >{$this->c['TXTAUTHOR']}</a>";
+                $message['BTNAUTHOR'] .= "\" target=\"link\" $lnk_class title=\"" . T('TITLE_SEARCH_BY_USER') . "\" >{$this->c['TXTAUTHOR']}</a>";
             }
             # Thread view button
             if (!$message['THREAD']) {
@@ -502,7 +502,7 @@ function tripuse($key) {
                 if ($mode == 1) {
                     $message['BTNTHREAD'] .= "&amp;ff=$tlog";
                 }
-                $message['BTNTHREAD'] .= "\" target=\"link\" $lnk_class title=\"Thread view\" >{$this->c['TXTTHREAD']}</a>";
+                $message['BTNTHREAD'] .= "\" target=\"link\" $lnk_class title=\"" . T('TITLE_THREAD_VIEW') . "\" >{$this->c['TXTTHREAD']}</a>";
             }
             # Tree view button
             $message['BTNTREE'] = '';
@@ -511,13 +511,13 @@ function tripuse($key) {
                 if ($mode == 1) {
                     $message['BTNTREE'] .= "&amp;ff=$tlog";
                 }
-                $message['BTNTREE'] .= "\" target=\"link\" $lnk_class title=\"Tree view\" >{$this->c['TXTTREE']}</a>";
+                $message['BTNTREE'] .= "\" target=\"link\" $lnk_class title=\"" . T('TITLE_TREE_VIEW') . "\" >{$this->c['TXTTREE']}</a>";
             }
             # UNDO button
             $message['BTNUNDO'] = '';
             if ($this->c['ALLOW_UNDO'] and isset($this->s['UNDO_P']) and $this->s['UNDO_P'] == $message['POSTID']) {
                 $message['BTNUNDO'] = "$spacer<a href=\"{$this->c['CGIURL']}?m=u&amp;s={$message['POSTID']}&amp;".$this->s['QUERY'];
-                $message['BTNUNDO'] .= "\" $lnk_class title=\"Delete post\" >{$this->c['TXTUNDO']}</a>";
+                $message['BTNUNDO'] .= "\" $lnk_class title=\"" . T('TITLE_DELETE_POST') . "\" >{$this->c['TXTUNDO']}</a>";
             }
             # Button integration
             $message['BTN'] = $message['BTNFOLLOW']. $message['BTNAUTHOR']. $message['BTNTHREAD']. $message['BTNTREE']. $message['BTNUNDO'];
@@ -1532,7 +1532,7 @@ class Bbs extends Webapp {
         ##             or strpos($this->f['t'], $ngword) !== FALSE
         ##             or strpos($this->f['u'], $ngword) !== FALSE
         ##             or strpos($this->f['i'], $ngword) !== FALSE) {
-        ##             $this->prterror( T('NGWORD_FOUND') );
+        ##            $this->prterror( T('NGWORD_FOUND') );
         ##         }
         ##     }
         ## }
