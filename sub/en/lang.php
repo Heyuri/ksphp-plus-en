@@ -8,7 +8,7 @@ $MSG = array(
 
     /* Generic / IO errors */
     'FAILED_TO_READ_MESSAGE'  => 'Failed to read message',
-    'FAILED_TO_OPEN_LOG'      => 'Failed to open log file',
+    'FAILED_TO_OPEN_LOG' => 'Failed to open log file: %s',
     'FAILED_TO_OUTPUT_LOG'    => 'Failed to output message log',
     'OLDLOG_TOO_LARGE'        => 'Message log file exceeds the file size limit',
     'PARTICIPANT_FILE_ERROR'  => 'Participant file output error',
