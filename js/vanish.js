@@ -1,4 +1,11 @@
 "use strict";
+
+const isJapanese = navigator.language.startsWith('ja');
+
+const TEXT_LINK_START = isJapanese ? 'NG Word(' : 'Filtered words&nbsp;(';
+const TEXT_LINK_HITS  = isJapanese ? '件hit)' : '&nbsp;hits)';
+const TEXT_UPDATE     = isJapanese ? '更新' : 'Update';
+
 function contains(array, elm) {
     for (var i = 0; i < array.length; i++) {
         if (array[i] === elm) return true;
@@ -52,7 +59,7 @@ var vanisher = {
             return false;
         };
 
-        this.ngWordLink.appendChild(document.createTextNode('Filtered words&nbsp;(' + this.ngWordCount + '&nbsp;hits)'));
+        this.ngWordLink.appendChild(document.createTextNode(TEXT_LINK_START + this.ngWordCount + TEXT_LINK_HITS));
         place.appendChild(this.ngWordLink);
         place.appendChild(document.createTextNode('\u00a0\u00a0'));
 
@@ -65,7 +72,7 @@ var vanisher = {
             if (e.key === 'Enter') {
                 var keyClick = document.getElementById("ngupdate");
                 if (/*@cc_on ! @*/ false) {
-                    // IE only
+                     // IE only
                     keyClick.fireEvent("onclick");
                 } else {
                     var event = document.createEvent("MouseEvents");
@@ -89,7 +96,7 @@ var vanisher = {
             cookie.set('ngWord', ngWordText.value);
             return false;
         };
-        this.ngWordUpdate.appendChild(document.createTextNode('Update'));
+        this.ngWordUpdate.appendChild(document.createTextNode(TEXT_UPDATE));
         this.ngWordBox.appendChild(this.ngWordUpdate);
         place.appendChild(this.ngWordBox);
     },
@@ -112,7 +119,8 @@ var vanisher = {
                 e.style.display = '';
             });
         }
-        this.ngWordLink.innerHTML = 'Filtered words&nbsp;(' + this.ngWordCount + '&nbsp;hits)';
+
+        this.ngWordLink.innerHTML = TEXT_LINK_START + this.ngWordCount + TEXT_LINK_HITS;
     },
     ngWordLink:null,
     ngWordBox:null,
