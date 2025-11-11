@@ -119,7 +119,6 @@ var vanisher = {
                 e.style.display = '';
             });
         }
-
         this.ngWordLink.innerHTML = TEXT_LINK_START + this.ngWordCount + TEXT_LINK_HITS;
     },
     ngWordLink:null,
